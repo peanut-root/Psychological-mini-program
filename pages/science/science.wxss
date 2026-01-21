@@ -1,0 +1,37 @@
+/* pages/science/science.wxss */
+.container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.main-content {
+  padding: 32rpx;
+}
+
+.science-card {
+  background-color: #ffffff;
+  border-radius: 24rpx;
+  padding: 48rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
+}
+
+.science-title {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #333333;
+  display: block;
+  margin-bottom: 32rpx;
+}
+
+.science-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.list-item {
+  font-size: 28rpx;
+  color: #333333;
+  line-height: 1.6;
+}
+

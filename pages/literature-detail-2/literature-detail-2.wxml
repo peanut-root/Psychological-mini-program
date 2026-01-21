@@ -1,0 +1,15 @@
+<!--pages/literature-detail-2/literature-detail-2.wxml-->
+<view class="container">
+  <view class="header">
+    <view class="back-btn" bindtap="goBack">← 返回</view>
+    <text class="header-title">文献详情</text>
+  </view>
+  <view class="main-content">
+    <view class="detail-card">
+      <text class="detail-title">青少年焦虑症的早期干预策略</text>
+      <text class="detail-source">《中国心理卫生杂志》2023</text>
+      <text class="detail-content">详细内容占位。</text>
+    </view>
+  </view>
+</view>
+

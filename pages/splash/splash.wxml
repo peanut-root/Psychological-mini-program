@@ -1,0 +1,41 @@
+<!--pages/splash/splash.wxml-->
+<view class="container">
+  <view class="title-area">
+    <text class="main-title">心屿</text>
+    <text class="sub-title">请选择3个情绪词，让我们更好的了解您</text>
+    <view class="progress-bar">
+      <view class="progress-fill" style="width: {{selectedCount * 33.33}}%"></view>
+      <text class="progress-text">{{selectedCount}}/3</text>
+    </view>
+  </view>
+  
+  <view class="bubbles-container">
+    <view 
+      class="bubble {{item.popped ? 'popped' : ''}} {{item.selected ? 'selected' : ''}}" 
+      wx:for="{{bubbles}}" 
+      wx:key="id"
+      style="left: {{item.x - item.radius}}rpx; top: {{item.y - item.radius}}rpx; width: {{item.radius * 2}}rpx; height: {{item.radius * 2}}rpx; background-color: {{item.color}}; opacity: 0.7;"
+      bindtap="onBubbleTap"
+      data-id="{{item.id}}">
+      <text class="bubble-number">{{item.number}}</text>
+    </view>
+  </view>
+
+  <!-- 戳破特效（使用CSS动画） -->
+  <view class="pop-effect" wx:if="{{showPopEffect}}" style="left: {{popEffectX}}rpx; top: {{popEffectY}}rpx;">
+    <view class="pop-ring"></view>
+    <view class="pop-particles">
+      <view class="particle particle-0"></view>
+      <view class="particle particle-1"></view>
+      <view class="particle particle-2"></view>
+      <view class="particle particle-3"></view>
+      <view class="particle particle-4"></view>
+      <view class="particle particle-5"></view>
+      <view class="particle particle-6"></view>
+      <view class="particle particle-7"></view>
+    </view>
+  </view>
+
+  <button class="skip-button" bindtap="onSkipTap">Skip</button>
+</view>
+

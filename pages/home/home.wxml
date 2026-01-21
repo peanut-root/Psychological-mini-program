@@ -1,0 +1,56 @@
+<!--pages/home/home.wxml-->
+<view class="container">
+  <!-- 主内容区 -->
+  <scroll-view class="main-content" scroll-y>
+    <!-- 顶部两栏：救助电话 + 就诊指南 -->
+    <view class="section top-cards">
+      <view class="card-rescue card-hover">
+        <view class="card-header">
+          <text class="card-title">救助电话</text>
+          <view class="star-icon-small">
+            <text>⭐</text>
+          </view>
+        </view>
+        <text class="card-text">全国心理危机干预热线：\n400-161-9995</text>
+        <button class="btn-accent" bindtap="navigateToRescue">📞 一键拨打</button>
+      </view>
+
+      <view class="card-guide card-hover">
+        <view class="card-header">
+          <text class="card-title">就诊指南</text>
+          <view class="star-icon-small">
+            <text>⭐</text>
+          </view>
+        </view>
+        <text class="card-text">线下就诊流程、挂号科室与常见问诊准备</text>
+        <button class="btn-primary" bindtap="navigateToGuide">📖 查看指南</button>
+      </view>
+    </view>
+
+    <!-- 科普区块：情绪关键词 + 对应疾病，重复三组 -->
+    <view class="section science-vertical">
+      <view class="science-block" wx:for="{{scienceBlocks}}" wx:key="id">
+        <view class="science-head">
+          <text class="science-key">“{{item.keyword}}”</text>
+          <text class="science-disease">“{{item.disease}}”</text>
+        </view>
+        <view class="science-list">
+          <view class="science-row" bindtap="navigateToScience">综述科普</view>
+          <view class="science-row" bindtap="navigateToScience">误解科普</view>
+          <view class="science-row" bindtap="navigateToScience">治疗科普</view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 底部栏 -->
+  <view class="bottom-bar">
+    <button class="bar-btn" bindtap="navigateToLiterature">文献资料库</button>
+    <button class="bar-btn bar-btn-primary" bindtap="goSearch">站内搜索</button>
+    <button class="bar-btn" bindtap="navigateToUserInfo">个人中心</button>
+  </view>
+
+  <!-- Toast提示 -->
+  <view class="toast {{toastShow ? 'show' : ''}}">{{toastText}}</view>
+</view>
+

@@ -1,0 +1,14 @@
+<!--pages/weather/weather.wxml-->
+<view class="container">
+  <view class="header">
+    <view class="back-btn" bindtap="goBack">← 返回</view>
+    <text class="header-title">天气日记</text>
+  </view>
+  <view class="main-content">
+    <view class="weather-card">
+      <text class="weather-text">示例天气：晴 25℃</text>
+      <button class="btn-link" bindtap="linkMood">关联心情</button>
+    </view>
+  </view>
+</view>
+

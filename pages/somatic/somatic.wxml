@@ -1,0 +1,12 @@
+<!--pages/somatic/somatic.wxml-->
+<view class="container">
+  <view class="header">
+    <view class="back-btn" bindtap="goBack">← 返回</view>
+    <text class="header-title">躯体化症状</text>
+  </view>
+  <view class="main-content">
+    <view class="content-card">
+      <text class="content-text">躯体化症状相关知识与资源。</text>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,15 @@
+<!--pages/literature/literature.wxml-->
+<view class="container">
+  <view class="header">
+    <view class="back-btn" bindtap="goBack">← 返回</view>
+    <text class="header-title">最新文献</text>
+  </view>
+  <view class="main-content">
+    <view class="literature-list">
+      <view class="literature-item" wx:for="{{literatureList}}" wx:key="id" bindtap="navigateToDetail" data-id="{{item.id}}">
+        <text class="literature-title">{{item.title}}</text>
+      </view>
+    </view>
+  </view>
+</view>
+

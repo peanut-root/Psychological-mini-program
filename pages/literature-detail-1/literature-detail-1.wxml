@@ -1,0 +1,15 @@
+<!--pages/literature-detail-1/literature-detail-1.wxml-->
+<view class="container">
+  <view class="header">
+    <view class="back-btn" bindtap="goBack">← 返回</view>
+    <text class="header-title">文献详情</text>
+  </view>
+  <view class="main-content">
+    <view class="detail-card">
+      <text class="detail-title">抑郁症的认知行为疗法最新研究进展</text>
+      <text class="detail-source">《心理学报》2023</text>
+      <text class="detail-content">详细内容占位。</text>
+    </view>
+  </view>
+</view>
+

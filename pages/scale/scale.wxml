@@ -1,0 +1,10 @@
+<!--pages/scale/scale.wxml-->
+<view class="container">
+  <view class="main-content">
+    <view class="scale-card">
+      <text class="scale-title">SCL-90 量表</text>
+      <text class="scale-desc">这里将放置量表测评入口与题项。</text>
+    </view>
+  </view>
+</view>
+

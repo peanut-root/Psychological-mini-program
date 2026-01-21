@@ -1,0 +1,15 @@
+<!--pages/literature-detail-3/literature-detail-3.wxml-->
+<view class="container">
+  <view class="header">
+    <view class="back-btn" bindtap="goBack">← 返回</view>
+    <text class="header-title">文献详情</text>
+  </view>
+  <view class="main-content">
+    <view class="detail-card">
+      <text class="detail-title">AI辅助诊断双相情感障碍的可行性研究</text>
+      <text class="detail-source">《中华精神科杂志》2023</text>
+      <text class="detail-content">详细内容占位。</text>
+    </view>
+  </view>
+</view>
+

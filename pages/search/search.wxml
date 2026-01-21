@@ -1,0 +1,17 @@
+<!--pages/search/search.wxml-->
+<view class="container">
+  <view class="header">
+    <view class="back-btn" bindtap="goBack">← 返回</view>
+    <text class="header-title">搜索</text>
+  </view>
+  <view class="main-content">
+    <input class="search-input" placeholder="搜索内容..." value="{{keyword}}" bindinput="onInput" bindconfirm="onSearch" />
+    <view class="search-results" wx:if="{{results.length > 0}}">
+      <view class="result-item" wx:for="{{results}}" wx:key="id" bindtap="onResultClick" data-id="{{item.id}}">
+        <text class="result-title">{{item.title}}</text>
+        <text class="result-desc">{{item.desc}}</text>
+      </view>
+    </view>
+  </view>
+</view>
+

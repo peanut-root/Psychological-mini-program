@@ -1,0 +1,192 @@
+<!--pages/index/index.wxml-->
+<view class="container">
+  <!-- 顶部导航栏 -->
+  <view class="header">
+    <view class="header-left">
+      <!-- 星星吉祥物 -->
+      <view class="star-icon star-pulse">
+        <text class="iconfont icon-star">⭐</text>
+      </view>
+      <text class="logo-text">心屿</text>
+      <!-- 搜索框 -->
+      <view class="search-block" bindtap="onSearchClick">
+        <text class="iconfont icon-search">🔍</text>
+        <input class="search-input" placeholder="搜索心理知识、疾病..." bindconfirm="onSearchConfirm" value="{{searchValue}}" />
+      </view>
+    </view>
+    <view class="header-right">
+      <view class="user-btn" bindtap="navigateToUserInfo">
+        <text class="iconfont icon-user">👤</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 主内容区 -->
+  <scroll-view class="main-content" scroll-y>
+    <!-- 模块1：紧急救助与权威工具 -->
+    <view class="section">
+      <view class="grid-2">
+        <!-- 救助电话 -->
+        <view class="card-rescue card-hover">
+          <view class="card-header">
+            <text class="card-title">救助电话</text>
+            <view class="star-icon-small">
+              <text>⭐</text>
+            </view>
+          </view>
+          <text class="card-text">全国心理危机干预热线：\n400-161-9995</text>
+          <button class="btn-accent" bindtap="navigateToRescue">
+            📞 一键拨打
+          </button>
+        </view>
+        
+        <!-- 权威量表 -->
+        <view class="card-scale card-hover">
+          <view class="card-header">
+            <text class="card-title">权威量表</text>
+            <view class="star-icon-small">
+              <text>⭐</text>
+            </view>
+          </view>
+          <text class="card-text">免费SCL-90量表\n专业心理测评</text>
+          <button class="btn-primary" bindtap="navigateToScale">
+            📋 立即测评
+          </button>
+        </view>
+      </view>
+    </view>
+
+    <!-- 模块2：科普与疾病分类 -->
+    <view class="section">
+      <view class="card-science card-hover">
+        <view class="science-header">
+          <view class="science-title-wrapper">
+            <view class="star-icon-medium">
+              <text>⭐</text>
+            </view>
+            <text class="science-title">心理科普</text>
+          </view>
+          <view class="more-btn" bindtap="navigateToScience">
+            <text>更多 →</text>
+          </view>
+        </view>
+        <text class="science-desc">了解心理疾病知识，科学应对心理健康问题</text>
+        <text class="disease-title">疾病分类</text>
+        <view class="disease-bubbles" id="diseaseBubbles">
+          <view class="bubble-item {{item.animClass}}" wx:for="{{diseaseList}}" wx:key="id" 
+                style="left: {{item.x}}px; top: {{item.y}}px; background-color: {{item.color}};"
+                bindtap="navigateToDisease" data-type="{{item.type}}">
+            <text class="iconfont {{item.icon}}"></text>
+            <text class="bubble-label">{{item.label}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 模块3：AI与互动功能 -->
+    <view class="section">
+      <text class="section-title">互动功能</text>
+      <view class="grid-3">
+        <!-- AI助手 -->
+        <view class="interaction-card card-hover" bindtap="navigateToAI">
+          <view class="star-icon-small">
+            <text>⭐</text>
+          </view>
+          <view class="icon-circle bg-green">
+            <text>🤖</text>
+          </view>
+          <text class="card-title-small">AI心理助手</text>
+          <button class="btn-small btn-green">咨询AI</button>
+        </view>
+        
+        <!-- 治愈类游戏 -->
+        <view class="interaction-card card-hover" bindtap="navigateToGame">
+          <view class="star-icon-small">
+            <text>⭐</text>
+          </view>
+          <view class="icon-circle bg-yellow">
+            <text>🎮</text>
+          </view>
+          <text class="card-title-small">治愈小游戏</text>
+          <button class="btn-small btn-yellow">开始游戏</button>
+        </view>
+        
+        <!-- 树洞功能 -->
+        <view class="interaction-card card-hover" bindtap="navigateToTreehole">
+          <view class="star-icon-small">
+            <text>⭐</text>
+          </view>
+          <view class="icon-circle bg-pink">
+            <text>💬</text>
+          </view>
+          <text class="card-title-small">心情树洞</text>
+          <button class="btn-small btn-pink">匿名倾诉</button>
+        </view>
+      </view>
+    </view>
+
+    <!-- 模块4：日志与天气 -->
+    <view class="section">
+      <view class="grid-2">
+        <!-- 日志APP -->
+        <view class="card-diary card-hover" bindtap="navigateToDiary">
+          <view class="card-header">
+            <view>
+              <text class="card-title">心情日志</text>
+              <text class="card-desc">记录你的每日心情变化</text>
+            </view>
+            <view class="star-icon-small">
+              <text>⭐</text>
+            </view>
+          </view>
+          <button class="btn-primary btn-inline">✏️ 写日志</button>
+        </view>
+        
+        <!-- 天气日记 -->
+        <view class="card-weather card-hover" bindtap="navigateToWeather">
+          <view class="card-header">
+            <view>
+              <text class="card-title">天气日记</text>
+              <view class="weather-info">
+                <text>☀️</text>
+                <text>晴天 25℃</text>
+              </view>
+            </view>
+            <view class="star-icon-small">
+              <text>⭐</text>
+            </view>
+          </view>
+          <button class="btn-accent btn-inline">🔗 关联心情</button>
+        </view>
+      </view>
+    </view>
+
+    <!-- 模块5：最新文献 -->
+    <view class="section">
+      <view class="literature-header">
+        <view class="literature-title-wrapper">
+          <view class="star-icon-small">
+            <text>⭐</text>
+          </view>
+          <text class="section-title">最新文献概述</text>
+        </view>
+        <view class="more-btn-small" bindtap="navigateToLiterature">
+          <text>查看全部</text>
+        </view>
+      </view>
+      
+      <scroll-view class="literature-scroll" scroll-x>
+        <view class="literature-item card-hover" wx:for="{{literatureList}}" wx:key="id" 
+              bindtap="navigateToLiteratureDetail" data-id="{{item.id}}">
+          <text class="literature-title">{{item.title}}</text>
+          <text class="literature-source">{{item.source}}</text>
+          <text class="literature-desc">{{item.desc}}</text>
+        </view>
+      </scroll-view>
+    </view>
+  </scroll-view>
+
+  <!-- Toast提示 -->
+  <view class="toast {{toastShow ? 'show' : ''}}">{{toastText}}</view>
+</view>
+

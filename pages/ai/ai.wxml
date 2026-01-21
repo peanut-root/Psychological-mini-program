@@ -1,0 +1,13 @@
+<!--pages/ai/ai.wxml-->
+<view class="container">
+  <view class="header">
+    <view class="back-btn" bindtap="goBack">← 返回</view>
+    <text class="header-title">AI 心理助手</text>
+  </view>
+  <view class="main-content">
+    <view class="content-card">
+      <text class="content-text">在这里与 AI 助手进行对话。</text>
+    </view>
+  </view>
+</view>
+

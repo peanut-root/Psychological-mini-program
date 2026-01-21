@@ -1,0 +1,172 @@
+/**app.wxss**/
+page {
+  background-color: #E6F4FF;
+  font-family: -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif;
+  color: #333333;
+}
+
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 200rpx 0;
+  box-sizing: border-box;
+}
+
+/* 颜色变量 */
+:root {
+  --primary: #4096FF;
+  --secondary: #F0E6FF;
+  --accent: #FF7A45;
+  --lightBlue: #E6F4FF;
+  --lightRed: #FFF2F2;
+  --lightYellow: #FFFBE6;
+  --lightGreen: #F6FFED;
+  --lightPink: #FF85A2;
+  --darkText: #333333;
+  --grayText: #999999;
+  --starYellow: #FFD700;
+}
+
+/* 通用工具类 */
+.bg-lightBlue {
+  background-color: #E6F4FF;
+}
+
+.bg-white {
+  background-color: #ffffff;
+}
+
+.bg-lightRed {
+  background-color: #FFF2F2;
+}
+
+.bg-lightYellow {
+  background-color: #FFFBE6;
+}
+
+.bg-lightGreen {
+  background-color: #F6FFED;
+}
+
+.text-primary {
+  color: #4096FF;
+}
+
+.text-darkText {
+  color: #333333;
+}
+
+.text-grayText {
+  color: #999999;
+}
+
+.text-white {
+  color: #ffffff;
+}
+
+/* 按钮样式 */
+.btn-primary {
+  background-color: #4096FF;
+  color: #ffffff;
+  border-radius: 16rpx;
+  padding: 20rpx 40rpx;
+  font-size: 28rpx;
+}
+
+.btn-accent {
+  background-color: #FF7A45;
+  color: #ffffff;
+  border-radius: 16rpx;
+  padding: 20rpx 40rpx;
+  font-size: 28rpx;
+}
+
+/* 卡片样式 */
+.card {
+  background-color: #ffffff;
+  border-radius: 24rpx;
+  padding: 40rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
+}
+
+.card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* 星星动画 */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.star-pulse {
+  animation: pulse 2s infinite;
+}
+
+/* 气泡动画 */
+@keyframes floatY {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-28rpx);
+  }
+}
+
+.bubble-anim-1 {
+  animation: floatY 3.6s ease-in-out infinite;
+}
+
+.bubble-anim-2 {
+  animation: floatY 4.1s ease-in-out infinite 0.2s;
+}
+
+.bubble-anim-3 {
+  animation: floatY 3.8s ease-in-out infinite 0.4s;
+}
+
+.bubble-anim-4 {
+  animation: floatY 4.4s ease-in-out infinite 0.1s;
+}
+
+.bubble-anim-5 {
+  animation: floatY 3.9s ease-in-out infinite 0.3s;
+}
+
+.bubble-anim-6 {
+  animation: floatY 4.2s ease-in-out infinite 0.5s;
+}
+
+/* Toast样式 */
+.toast {
+  position: fixed;
+  bottom: 160rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 20rpx 40rpx;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  border-radius: 40rpx;
+  font-size: 28rpx;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.toast.show {
+  opacity: 1;
+}
+
+/* 滚动条隐藏 */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+

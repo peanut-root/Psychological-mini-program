@@ -1,0 +1,20 @@
+<!--pages/interaction/interaction.wxml-->
+<view class="container">
+  <view class="main-content">
+    <view class="interaction-list">
+      <view class="interaction-item" bindtap="navigateToAI">
+        <text>AI 心理助手</text>
+        <text>→</text>
+      </view>
+      <view class="interaction-item" bindtap="navigateToGame">
+        <text>治愈小游戏</text>
+        <text>→</text>
+      </view>
+      <view class="interaction-item" bindtap="navigateToTreehole">
+        <text>心情树洞</text>
+        <text>→</text>
+      </view>
+    </view>
+  </view>
+</view>
+

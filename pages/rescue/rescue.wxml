@@ -1,0 +1,14 @@
+<!--pages/rescue/rescue.wxml-->
+<view class="container">
+  <view class="header">
+    <view class="back-btn" bindtap="goBack">← 返回</view>
+    <text class="header-title">救助电话</text>
+  </view>
+  <view class="main-content">
+    <view class="rescue-card">
+      <text class="rescue-text">全国心理危机干预热线：400-161-9995</text>
+      <button class="btn-call" bindtap="makeCall">一键拨打</button>
+    </view>
+  </view>
+</view>
+

@@ -1,0 +1,39 @@
+{
+  "pages": [
+    "pages/splash/splash",
+    "pages/splash2/splash2",
+    "pages/home/home",
+    "pages/search/search",
+    "pages/user-info/user-info",
+    "pages/rescue/rescue",
+    "pages/scale/scale",
+    "pages/science/science",
+    "pages/depression/depression",
+    "pages/anxiety/anxiety",
+    "pages/bipolar/bipolar",
+    "pages/ocd/ocd",
+    "pages/somatic/somatic",
+    "pages/adhd/adhd",
+    "pages/ai/ai",
+    "pages/game/game",
+    "pages/treehole/treehole",
+    "pages/diary/diary",
+    "pages/weather/weather",
+    "pages/literature/literature",
+    "pages/literature-detail-1/literature-detail-1",
+    "pages/literature-detail-2/literature-detail-2",
+    "pages/literature-detail-3/literature-detail-3",
+    "pages/interaction/interaction",
+    "pages/my-page/my-page"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTitleText": "心屿",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#E6F4FF"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}
+

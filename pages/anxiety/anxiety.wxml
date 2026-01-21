@@ -1,0 +1,12 @@
+<!--pages/anxiety/anxiety.wxml-->
+<view class="container">
+  <view class="header">
+    <view class="back-btn" bindtap="goBack">← 返回</view>
+    <text class="header-title">焦虑症</text>
+  </view>
+  <view class="main-content">
+    <view class="content-card">
+      <text class="content-text">焦虑症相关知识与资源。</text>
+    </view>
+  </view>
+</view>

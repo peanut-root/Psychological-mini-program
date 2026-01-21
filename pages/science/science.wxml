@@ -1,0 +1,14 @@
+<!--pages/science/science.wxml-->
+<view class="container">
+  <view class="main-content">
+    <view class="science-card">
+      <text class="science-title">心理科普</text>
+      <view class="science-list">
+        <view class="list-item">• 心理健康基础知识</view>
+        <view class="list-item">• 常见心理困扰与自助方法</view>
+        <view class="list-item">• 寻求专业帮助的建议</view>
+      </view>
+    </view>
+  </view>
+</view>
+

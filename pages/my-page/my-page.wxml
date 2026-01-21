@@ -1,0 +1,20 @@
+<!--pages/my-page/my-page.wxml-->
+<view class="container">
+  <view class="main-content">
+    <view class="menu-list">
+      <view class="menu-item" bindtap="navigateToUserInfo">
+        <text>个人信息</text>
+        <text>→</text>
+      </view>
+      <view class="menu-item" bindtap="navigateToDiary">
+        <text>我的日志</text>
+        <text>→</text>
+      </view>
+      <view class="menu-item" bindtap="navigateToTreehole">
+        <text>我的树洞</text>
+        <text>→</text>
+      </view>
+    </view>
+  </view>
+</view>
+

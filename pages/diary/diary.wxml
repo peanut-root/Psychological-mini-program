@@ -1,0 +1,13 @@
+<!--pages/diary/diary.wxml-->
+<view class="container">
+  <view class="header">
+    <view class="back-btn" bindtap="goBack">← 返回</view>
+    <text class="header-title">心情日志</text>
+  </view>
+  <view class="main-content">
+    <input class="title-input" placeholder="今天的心情是..." value="{{title}}" bindinput="onTitleInput" />
+    <textarea class="content-textarea" placeholder="记录一下..." value="{{content}}" bindinput="onContentInput" maxlength="500"></textarea>
+    <button class="btn-save" bindtap="saveDiary">保存</button>
+  </view>
+</view>
+
