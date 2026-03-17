@@ -1,0 +1,29 @@
+# 心理小程序 Development Guidelines
+
+Auto-generated from all feature plans. Last updated: 2026-01-21
+
+## Active Technologies
+
+- WeChat Mini Program (JavaScript, WXML/WXSS) + Native WeChat Mini Program runtime only (no extra UI libs identified) (001-yellow-background)
+
+## Project Structure
+
+```text
+src/
+tests/
+```
+
+## Commands
+
+npm test && npm run lint
+
+## Code Style
+
+WeChat Mini Program (JavaScript, WXML/WXSS): Follow standard conventions
+
+## Recent Changes
+
+- 001-yellow-background: Added WeChat Mini Program (JavaScript, WXML/WXSS) + Native WeChat Mini Program runtime only (no extra UI libs identified)
+
+<!-- MANUAL ADDITIONS START -->
+<!-- MANUAL ADDITIONS END -->

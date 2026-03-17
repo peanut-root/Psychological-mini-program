@@ -1,15 +1,61 @@
 <!--pages/search/search.wxml-->
 <view class="container">
-  <view class="header">
-    <view class="back-btn" bindtap="goBack">← 返回</view>
-    <text class="header-title">搜索</text>
+  <!-- 顶部搜索栏 -->
+  <view class="search-header">
+    <view class="search-box">
+      <text class="search-icon">🔍</text>
+      <input 
+        class="search-input" 
+        placeholder="搜索疾病、症状、知识..." 
+        value="{{keyword}}" 
+        bindinput="onInput" 
+        bindconfirm="onSearch"
+        focus="{{true}}"
+      />
+      <text class="clear-btn" wx:if="{{keyword}}" bindtap="clearInput">✕</text>
+    </view>
+    <text class="cancel-btn" bindtap="goBack">取消</text>
   </view>
-  <view class="main-content">
-    <input class="search-input" placeholder="搜索内容..." value="{{keyword}}" bindinput="onInput" bindconfirm="onSearch" />
-    <view class="search-results" wx:if="{{results.length > 0}}">
-      <view class="result-item" wx:for="{{results}}" wx:key="id" bindtap="onResultClick" data-id="{{item.id}}">
-        <text class="result-title">{{item.title}}</text>
-        <text class="result-desc">{{item.desc}}</text>
+
+  <!-- 搜索结果 -->
+  <view class="results" wx:if="{{searched && results.length > 0}}">
+    <view class="result-item" wx:for="{{results}}" wx:key="id" bindtap="onResultClick" data-id="{{item.id}}">
+      <text class="result-title">{{item.title}}</text>
+      <text class="result-desc">{{item.desc}}</text>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{searched && results.length === 0}}">
+    <text class="empty-text">未找到相关内容</text>
+  </view>
+
+  <!-- 默认状态：历史记录和推荐搜索 -->
+  <view class="default-content" wx:if="{{!searched}}">
+    <!-- 搜索历史 -->
+    <view class="section" wx:if="{{history.length > 0}}">
+      <view class="section-header">
+        <text class="section-title">搜索历史</text>
+        <text class="clear-history" bindtap="clearHistory">清空</text>
+      </view>
+      <view class="tag-list">
+        <view class="tag-item" wx:for="{{history}}" wx:key="index" bindtap="onTagClick" data-keyword="{{item}}">
+          <text class="tag-icon">🕐</text>
+          <text class="tag-text">{{item}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 推荐搜索 -->
+    <view class="section">
+      <view class="section-header">
+        <text class="section-title">推荐搜索</text>
+      </view>
+      <view class="tag-list">
+        <view class="tag-item recommend" wx:for="{{recommendations}}" wx:key="index" bindtap="onTagClick" data-keyword="{{item}}">
+          <text class="tag-icon">🔥</text>
+          <text class="tag-text">{{item}}</text>
+        </view>
       </view>
     </view>
   </view>

@@ -1,0 +1,47 @@
+<view class="result-wrapper">
+  <block wx:if="{{result}}">
+    <!-- 头部汇总 -->
+    <view class="result-header">
+      <view class="header-main">
+        <text class="disease-name">{{result.disease}}</text>
+        <text class="report-tag">问诊参考简报</text>
+      </view>
+      <text class="record-date">记录日期：{{result.date}}</text>
+    </view>
+
+    <!-- 医生建议区域 -->
+    <view class="doctor-tip-box">
+      <text class="tip-title">💡 问诊建议</text>
+      <text class="tip-content">请在面诊时主动向医生出示此页勾选的症状，这有助于医生快速了解您的病程细节。</text>
+    </view>
+
+    <!-- 勾选详情 -->
+    <view class="details-list">
+      <view class="section-block" wx:for="{{result.sections}}" wx:key="title">
+        <view class="section-title">{{item.title}}</view>
+        <view class="qa-item" wx:for="{{item.questions}}" wx:for-item="q" wx:key="title">
+          <text class="q-text">{{q.title}}</text>
+          <view class="ans-box">
+            <view class="ans-tag" wx:for="{{q.options}}" wx:for-item="opt" wx:key="label">
+              <text class="opt-label">{{opt.label}}</text>
+              <text class="opt-hint" wx:if="{{opt.hint}}">（{{opt.hint}}）</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 底部操作 -->
+    <view class="action-footer">
+      <button class="re-edit-btn" bindtap="reEdit">重新勾选</button>
+    </view>
+  </block>
+
+  <block wx:else>
+    <view class="empty-state">
+      <text class="empty-icon">📝</text>
+      <text class="empty-text">您还没有保存过就诊背书记录</text>
+      <button class="go-btn" bindtap="reEdit">去勾选</button>
+    </view>
+  </block>
+</view>

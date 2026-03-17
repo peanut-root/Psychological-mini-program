@@ -48,8 +48,8 @@
     "disableSWC": true
   },
   "compileType": "miniprogram",
-  "libVersion": "2.19.4",
-  "appid": "touristappid",
+  "libVersion": "3.11.0",
+  "appid": "wxe67e04783480ba0f",
   "projectname": "心屿心理科普小程序",
   "isGameTourist": false,
   "condition": {

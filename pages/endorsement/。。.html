@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>接住掉落的星星 | 纯鼠标小游戏</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "微软雅黑", sans-serif;
+        }
+        body {
+            background: linear-gradient(120deg, #000814, #001d3d, #003566);
+            color: #fff;
+            overflow: hidden;
+        }
+        /* 游戏核心容器 */
+        #game-box {
+            width: 100vw;
+            height: 90vh;
+            position: relative;
+            border-bottom: 3px solid #ffc300;
+        }
+        /* 信息面板：得分+生命值 */
+        .info-panel {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 50px;
+            font-size: 28px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px 40px;
+            border-radius: 15px;
+            z-index: 100;
+        }
+        .life span {
+            color: #ff4d6d;
+        }
+        .score span {
+            color: #ffc300;
+        }
+        /* 星星样式：掉落的目标 */
+        .star {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffc300'%3E%3Cpath d='M12 0L14.5 9.5H24L16.5 15L19 24L12 18.5L5 24L7.5 15L0 9.5H9.5L12 0Z'/%3E%3C/svg%3E") no-repeat center;
+            background-size: 100% 100%;
+            cursor: pointer;
+            transition: transform 0.1s ease;
+        }
+        .star:hover {
+            transform: scale(1.1);
+        }
+        /* 按钮样式 */
+        #restart-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 25px;
+            font-size: 18px;
+            background: #ffc300;
+            color: #000814;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 100;
+            transition: background 0.2s;
+        }
+        #restart-btn:hover {
+            background: #ffd60a;
+        }
+        /* 游戏结束提示 */
+        #game-over-tip {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 40px 80px;
+            border-radius: 20px;
+            border: 2px solid #ffc300;
+            display: none;
+            z-index: 200;
+        }
+        #game-over-tip h2 {
+            font-size: 48px;
+            color: #ff4d6d;
+            margin-bottom: 20px;
+        }
+        #game-over-tip p {
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+        #game-over-tip p span {
+            color: #ffc300;
+            font-weight: bold;
+        }
+        #replay-btn {
+            padding: 12px 30px;
+            font-size: 20px;
+            background: #ffc300;
+            color: #000814;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        #replay-btn:hover {
+            background: #ffd60a;
+        }
+    </style>
+</head>
+<body>
+    <div class="info-panel">
+        <div class="life">生命值：<span id="life">3</span></div>
+        <div class="score">得分：<span id="score">0</span></div>
+    </div>
+    <button id="restart-btn">重新开始</button>
+    <div id="game-box"></div>
+    <div id="game-over-tip">
+        <h2>游戏结束</h2>
+        <p>你的最终得分：<span id="final-score">0</span></p>
+        <button id="replay-btn">再来一局</button>
+    </div>
+
+    <script>
+        // 游戏配置（可直接修改数值调整难度）
+        const GAME_CONFIG = {
+            starSize: [30, 50],    // 星星最小/最大尺寸
+            spawnTime: [800, 1500],// 星星生成间隔[最小,最大]毫秒
+            initSpeed: 2,          // 星星初始下落速度
+            speedUpStep: 0.2,      // 每得100分，速度提升值
+            scorePerStar: 10,      // 每颗星星得分
+            initLife: 3            // 初始生命值
+        };
+
+        // 游戏全局状态
+        let gameState = {
+            score: 0,
+            life: GAME_CONFIG.initLife,
+            starSpeed: GAME_CONFIG.initSpeed,
+            spawnTimer: null,
+            starMoveTimers: [],
+            isRunning: false
+        };
+
+        // 获取页面元素
+        const gameBox = document.getElementById('game-box');
+        const lifeEl = document.getElementById('life');
+        const scoreEl = document.getElementById('score');
+        const restartBtn = document.getElementById('restart-btn');
+        const gameOverTip = document.getElementById('game-over-tip');
+        const finalScoreEl = document.getElementById('final-score');
+        const replayBtn = document.getElementById('replay-btn');
+
+        // 初始化游戏（核心入口）
+        function initGame() {
+            // 重置游戏状态
+            gameState.score = 0;
+            gameState.life = GAME_CONFIG.initLife;
+            gameState.starSpeed = GAME_CONFIG.initSpeed;
+            gameState.isRunning = true;
+            // 清空星星移动定时器
+            gameState.starMoveTimers.forEach(t => clearInterval(t));
+            gameState.starMoveTimers = [];
+            // 重置页面显示
+            scoreEl.innerText = gameState.score;
+            lifeEl.innerText = gameState.life;
+            gameBox.innerHTML = '';
+            gameOverTip.style.display = 'none';
+
+            // 启动星星生成定时器
+            startSpawnStar();
+        }
+
+        // 随机生成星星
+        function spawnStar() {
+            if (!gameState.isRunning) return;
+
+            // 创建星星元素
+            const star = document.createElement('div');
+            star.className = 'star';
+            // 随机星星尺寸
+            const starSize = Math.floor(Math.random() * (GAME_CONFIG.starSize[1] - GAME_CONFIG.starSize[0])) + GAME_CONFIG.starSize[0];
+            star.style.width = `${starSize}px`;
+            star.style.height = `${starSize}px`;
+            // 随机水平位置（避免超出屏幕）
+            const maxLeft = gameBox.clientWidth - starSize;
+            const randomLeft = Math.floor(Math.random() * maxLeft);
+            star.style.left = `${randomLeft}px`;
+            star.style.top = `0px`;
+
+            // 绑定鼠标点击事件：点击星星得分
+            star.addEventListener('click', () => {
+                getScore(star);
+            });
+
+            gameBox.appendChild(star);
+            // 让星星下落
+            moveStar(star);
+        }
+
+        // 启动星星生成（随机间隔，增加趣味性）
+        function startSpawnStar() {
+            clearInterval(gameState.spawnTimer);
+            gameState.spawnTimer = setInterval(() => {
+                const randomTime = Math.floor(Math.random() * (GAME_CONFIG.spawnTime[1] - GAME_CONFIG.spawnTime[0])) + GAME_CONFIG.spawnTime[0];
+                setTimeout(spawnStar, randomTime);
+            }, GAME_CONFIG.spawnTime[1]);
+        }
+
+        // 星星下落逻辑
+        function moveStar(star) {
+            const moveTimer = setInterval(() => {
+                if (!gameState.isRunning) {
+                    clearInterval(moveTimer);
+                    return;
+                }
+                // 获取当前顶部位置
+                let currentTop = parseFloat(star.style.top);
+                currentTop += gameState.starSpeed;
+                star.style.top = `${currentTop}px`;
+
+                // 星星落地：扣生命值
+                if (currentTop >= gameBox.clientHeight - parseFloat(star.style.height)) {
+                    clearInterval(moveTimer);
+                    star.remove();
+                    loseLife();
+                }
+            }, 16); // 60帧/秒，保证动画流畅
+
+            gameState.starMoveTimers.push(moveTimer);
+        }
+
+        // 点击星星得分
+        function getScore(star) {
+            if (!gameState.isRunning) return;
+            // 加分并更新显示
+            gameState.score += GAME_CONFIG.scorePerStar;
+            scoreEl.innerText = gameState.score;
+            // 星星消失
+            star.remove();
+            // 每得100分，提升下落速度（增加难度）
+            if (gameState.score % 100 === 0) {
+                gameState.starSpeed += GAME_CONFIG.speedUpStep;
+            }
+        }
+
+        // 星星落地扣生命值
+        function loseLife() {
+            gameState.life--;
+            lifeEl.innerText = gameState.life;
+            // 生命值为0，游戏结束
+            if (gameState.life <= 0) {
+                gameOver();
+            }
+        }
+
+        // 游戏结束逻辑
+        function gameOver() {
+            gameState.isRunning = false;
+            // 清空所有定时器
+            clearInterval(gameState.spawnTimer);
+            gameState.starMoveTimers.forEach(t => clearInterval(t));
+            // 显示游戏结束提示
+            finalScoreEl.innerText = gameState.score;
+            gameOverTip.style.display = 'block';
+        }
+
+        // 绑定按钮点击事件
+        restartBtn.addEventListener('click', initGame);
+        replayBtn.addEventListener('click', initGame);
+
+        // 页面加载完成，自动启动游戏
+        window.onload = initGame;
+    </script>
+</body>
+</html>

@@ -1,5 +1,5 @@
 <!--pages/ocd/ocd.wxml-->
-<view class="container">
+<view class="container bg-app-yellow page-fill">
   <view class="header">
     <view class="back-btn" bindtap="goBack">← 返回</view>
     <text class="header-title">强迫症</text>

@@ -1,5 +1,5 @@
 <!--pages/home/home.wxml-->
-<view class="container">
+<view class="container bg-app-yellow page-fill">
   <!-- 主内容区 -->
   <scroll-view class="main-content" scroll-y>
     <!-- 顶部两栏：救助电话 + 就诊指南 -->
@@ -7,9 +7,6 @@
       <view class="card-rescue card-hover">
         <view class="card-header">
           <text class="card-title">救助电话</text>
-          <view class="star-icon-small">
-            <text>⭐</text>
-          </view>
         </view>
         <text class="card-text">全国心理危机干预热线：\n400-161-9995</text>
         <button class="btn-accent" bindtap="navigateToRescue">📞 一键拨打</button>
@@ -18,11 +15,8 @@
       <view class="card-guide card-hover">
         <view class="card-header">
           <text class="card-title">就诊指南</text>
-          <view class="star-icon-small">
-            <text>⭐</text>
-          </view>
         </view>
-        <text class="card-text">线下就诊流程、挂号科室与常见问诊准备</text>
+        <text class="card-text">医院推荐、线下就诊流程、常见就诊问题</text>
         <button class="btn-primary" bindtap="navigateToGuide">📖 查看指南</button>
       </view>
     </view>
@@ -46,7 +40,7 @@
   <!-- 底部栏 -->
   <view class="bottom-bar">
     <button class="bar-btn" bindtap="navigateToLiterature">文献资料库</button>
-    <button class="bar-btn bar-btn-primary" bindtap="goSearch">站内搜索</button>
+    <button class="bar-btn bar-btn-primary" bindtap="goSearch">站内搜索🔍</button>
     <button class="bar-btn" bindtap="navigateToUserInfo">个人中心</button>
   </view>
 

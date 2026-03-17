@@ -1,8 +1,10 @@
 /* pages/splash2/splash2.wxss */
+@import "../../styles/theme.wxss";
+
 .container {
     width: 100vw;
     height: 100vh;
-    background: linear-gradient(180deg, #E6F4FF 0%, #F0E6FF 100%);
+    background-color: #FFF6D8;
     position: relative;
     overflow: hidden;
   }

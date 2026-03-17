@@ -1,0 +1,142 @@
+.result-wrapper {
+  min-height: 100vh;
+  background-color: #F8F9FA;
+  padding-bottom: 100rpx;
+  width: 100vw;
+}
+
+.result-header {
+  background-color: #ffffff;
+  padding: 60rpx 40rpx;
+  border-bottom: 1rpx solid #F0F0F0;
+}
+
+.header-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+
+.disease-name {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #1A1A1A;
+}
+
+.report-tag {
+  font-size: 22rpx;
+  color: #4096FF;
+  background: #E6F4FF;
+  padding: 4rpx 16rpx;
+  border-radius: 8rpx;
+}
+
+.record-date {
+  font-size: 24rpx;
+  color: #999999;
+}
+
+.doctor-tip-box {
+  margin: 30rpx 40rpx;
+  background: #FFFBE6;
+  border: 1rpx solid #FFE58F;
+  padding: 24rpx 32rpx;
+  border-radius: 16rpx;
+}
+
+.tip-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #856404;
+  margin-bottom: 8rpx;
+  display: block;
+}
+
+.tip-content {
+  font-size: 24rpx;
+  color: #856404;
+  line-height: 1.5;
+}
+
+.section-block {
+  margin-bottom: 40rpx;
+}
+
+.section-title {
+  font-size: 28rpx;
+  color: #999999;
+  padding: 20rpx 40rpx;
+}
+
+.qa-item {
+  background: #ffffff;
+  padding: 32rpx 40rpx;
+  border-bottom: 1rpx solid #F5F5F5;
+}
+
+.q-text {
+  font-size: 30rpx;
+  color: #666666;
+  margin-bottom: 20rpx;
+  display: block;
+}
+
+.ans-box {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.ans-tag {
+  background: #F9F9F9;
+  padding: 20rpx;
+  border-radius: 12rpx;
+}
+
+.opt-label {
+  font-size: 28rpx;
+  color: #1A1A1A;
+  font-weight: 500;
+}
+
+.opt-hint {
+  font-size: 24rpx;
+  color: #888888;
+}
+
+.action-footer {
+  padding: 60rpx 40rpx;
+}
+
+.re-edit-btn {
+  background: #ffffff;
+  color: #4096FF;
+  border: 1rpx solid #4096FF;
+  border-radius: 50rpx;
+  font-size: 30rpx;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 200rpx;
+}
+
+.empty-icon {
+  font-size: 120rpx;
+  margin-bottom: 40rpx;
+}
+
+.empty-text {
+  color: #999999;
+  margin-bottom: 60rpx;
+}
+
+.go-btn {
+  background: #4096FF;
+  color: #fff;
+  width: 300rpx;
+  border-radius: 40rpx;
+}

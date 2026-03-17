@@ -1,7 +1,9 @@
 /* pages/ocd/ocd.wxss */
+@import "../../styles/theme.wxss";
+
 .container {
   min-height: 100vh;
-  background-color: #f5f5f5;
+  background-color: #FFF6D8;
 }
 .header {
   background-color: #ffffff;

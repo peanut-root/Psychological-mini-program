@@ -1,11 +1,12 @@
 {
   "pages": [
+    "pages/home/home",
     "pages/splash/splash",
     "pages/splash2/splash2",
-    "pages/home/home",
     "pages/search/search",
     "pages/user-info/user-info",
     "pages/rescue/rescue",
+    "pages/guide/guide",
     "pages/scale/scale",
     "pages/science/science",
     "pages/depression/depression",
@@ -23,8 +24,12 @@
     "pages/literature-detail-1/literature-detail-1",
     "pages/literature-detail-2/literature-detail-2",
     "pages/literature-detail-3/literature-detail-3",
+    "pages/literature-detail/literature-detail",
     "pages/interaction/interaction",
-    "pages/my-page/my-page"
+    "pages/my-page/my-page",
+    "pages/hospital/hospital",
+    "pages/endorsement/endorsement",
+    "pages/endorsement-result/endorsement-result"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -34,6 +39,11 @@
     "backgroundColor": "#E6F4FF"
   },
   "style": "v2",
+  "permission": {
+    "scope.userLocation": {
+      "desc": "您的位置信息将用于为您展示医院的准确方位"
+    }
+  },
   "sitemapLocation": "sitemap.json"
 }
 

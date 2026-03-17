@@ -1,4 +1,3 @@
-// pages/rescue/rescue.js
 Page({
   data: {
 
@@ -21,10 +20,5 @@ Page({
         })
       }
     })
-  },
-
-  goBack() {
-    wx.navigateBack()
   }
 })
-

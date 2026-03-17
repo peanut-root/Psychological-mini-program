@@ -1,7 +1,9 @@
 /* pages/home/home.wxss */
+@import "../../styles/theme.wxss";
+
 .container {
   min-height: 100vh;
-  background-color: #E6F4FF;
+  background-color: #FFFFFF;
   padding-bottom: 200rpx; /* 预留底部bar空间 */
 }
 
@@ -29,7 +31,7 @@
   flex: 1;
   min-width: 0;
   box-sizing: border-box;
-  align-items: center;
+  align-items: stretch;
   text-align: center;
 }
 
@@ -44,7 +46,7 @@
   flex: 1;
   min-width: 0;
   box-sizing: border-box;
-  align-items: center;
+  align-items: stretch;
   text-align: center;
 }
 
@@ -54,8 +56,8 @@
 
 .card-header {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
   margin-bottom: 24rpx;
   width: 100%;
 }
@@ -101,31 +103,33 @@
   margin: 24rpx 0;
   line-height: 1.6;
   white-space: pre-line;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn-primary {
   background-color: #4096FF;
   color: #ffffff;
-  border-radius: 16rpx;
-  padding: 16rpx 32rpx;
+  border-radius: 40rpx;
+  padding: 16rpx 0;
   font-size: 28rpx;
   border: none;
   margin-top: 16rpx;
-  width: 100%;
-  max-width: 360rpx;
+  width: 100% !important;
   box-sizing: border-box;
 }
 
 .btn-accent {
   background-color: #FF7A45;
   color: #ffffff;
-  border-radius: 16rpx;
-  padding: 16rpx 32rpx;
+  border-radius: 40rpx;
+  padding: 16rpx 0;
   font-size: 28rpx;
   border: none;
   margin-top: 16rpx;
-  width: 100%;
-  max-width: 360rpx;
+  width: 100% !important;
   box-sizing: border-box;
 }
 
@@ -196,6 +200,10 @@
   color: #2f4f73;
   font-size: 28rpx;
   border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
 }
 
 .bar-btn-primary {

@@ -1,0 +1,24 @@
+# WeChat Mini Program
+node_modules/
+dist/
+build/
+*.log
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# WeChat Developer Tools
+.tea/

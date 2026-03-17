@@ -1,0 +1,71 @@
+<view class="endorsement-wrapper">
+  <!-- 疾病选择器 -->
+  <view class="selector-section">
+    <text class="section-hint">请选择您需要咨询的症状类型：</text>
+    <picker mode="selector" range="{{diseaseNames}}" bindchange="onDiseaseChange" value="{{diseaseIndex}}">
+      <view class="disease-picker">
+        <text class="current-disease">{{diseaseNames[diseaseIndex]}}</text>
+        <text class="arrow-down">▼</text>
+      </view>
+    </picker>
+  </view>
+
+  <!-- 问诊建议正文 -->
+  <scroll-view scroll-y class="content-scroll">
+    <view class="intro-card">
+      <view class="intro-header">
+        <text class="intro-title">诊前背书助手</text>
+        <view class="intro-tag">点击可勾选</view>
+      </view>
+      <text class="intro-desc">请根据您的实际情况勾选以下症状。这有助于您在面对医生时，更清晰地描述病情并获得准确诊断。</text>
+    </view>
+
+    <view class="question-list">
+      <block wx:for="{{currentGuideline}}" wx:for-index="sIdx" wx:key="sectionTitle">
+        <view class="section-group">
+          <view class="group-header">
+            <view class="header-line"></view>
+            <text class="group-title">{{item.sectionTitle}}</text>
+          </view>
+          
+          <view class="questions">
+            <view class="question-block" wx:for="{{item.questions}}" wx:for-item="q" wx:for-index="qIdx" wx:key="title">
+              <view class="q-header">
+                <text class="q-title">{{q.title}}</text>
+                <text class="q-hint" wx:if="{{q.isMulti}}">（多选）</text>
+              </view>
+              <view class="q-aux-hint" wx:if="{{q.hint}}">说明：{{q.hint}}</view>
+              
+              <view class="options-container">
+                <view class="option-item {{opt.selected ? 'option-selected' : ''}}" 
+                      wx:for="{{q.options}}" 
+                      wx:for-item="opt" 
+                      wx:for-index="oIdx" 
+                      wx:key="label"
+                      bindtap="toggleOption"
+                      data-sidx="{{sIdx}}"
+                      data-qidx="{{qIdx}}"
+                      data-oidx="{{oIdx}}">
+                  <view class="option-main">
+                    <text class="option-label">{{opt.label}}</text>
+                    <text class="option-hint" wx:if="{{opt.hint}}">例子：{{opt.hint}}</text>
+                  </view>
+                  <view class="check-box {{opt.selected ? 'checked' : ''}}">
+                    <icon type="success_no_circle" size="14" color="#FFFFFF" wx:if="{{opt.selected}}"/>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+  </scroll-view>
+
+  <!-- 底部操作栏 -->
+  <view class="bottom-bar">
+    <button class="save-btn" bindtap="onSaveTip">
+      记在备忘录 / 汇总症状
+    </button>
+  </view>
+</view>

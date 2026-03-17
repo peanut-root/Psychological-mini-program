@@ -1,0 +1,51 @@
+<view class="container">
+  <!-- 顶部选择栏 -->
+  <view class="header">
+    <view class="title-section">
+      <text class="page-title">推荐机构</text>
+      <text class="page-subtitle">为您精选所在地区的优质医疗资源</text>
+    </view>
+    <picker mode="selector" range="{{regions}}" bindchange="onRegionChange" value="{{regionIndex}}">
+      <view class="region-selector">
+        <text class="current-region">{{regions[regionIndex]}}</text>
+        <text class="arrow-down">▼</text>
+      </view>
+    </picker>
+  </view>
+
+  <!-- 医院展示区域 -->
+  <view class="hospital-content">
+    <view class="card hospital-card" wx:if="{{currentHospitals.comprehensive}}">
+      <view class="card-header">
+        <view class="type-tag tag-blue">综合性医院</view>
+        <text class="dept-info">精神心理科</text>
+      </view>
+      <view class="hospital-name">{{currentHospitals.comprehensive.name}}</view>
+      <view class="hospital-desc">{{currentHospitals.comprehensive.desc}}</view>
+      <view class="action-bar">
+        <view class="location-btn" bindtap="openMap" data-type="comprehensive">
+          <text class="icon">📍</text> 查看位置
+        </view>
+      </view>
+    </view>
+
+    <view class="card hospital-card" wx:if="{{currentHospitals.specialized}}">
+      <view class="card-header">
+        <view class="type-tag tag-purple">专科医院</view>
+        <text class="dept-info">心理疾病专科</text>
+      </view>
+      <view class="hospital-name">{{currentHospitals.specialized.name}}</view>
+      <view class="hospital-desc">{{currentHospitals.specialized.desc}}</view>
+      <view class="action-bar">
+        <view class="location-btn" bindtap="openMap" data-type="specialized">
+          <text class="icon">📍</text> 查看位置
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 提示信息 -->
+  <view class="footer-tips">
+    <text>⚠️ 建议就诊前先通过官方渠道预约</text>
+  </view>
+</view>

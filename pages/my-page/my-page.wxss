@@ -1,38 +1,143 @@
 /* pages/my-page/my-page.wxss */
-.container {
+.my-page-wrapper {
   min-height: 100vh;
-  background-color: #f5f5f5;
-}
-
-.main-content {
-  padding: 32rpx;
-}
-
-.menu-list {
+  background-color: #FFFFFF;
   display: flex;
   flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  padding: 0;
+  width: 100vw;
+  overflow-x: hidden;
+}
+
+/* 用户信息区域 */
+.user-section {
+  width: 100%;
   background-color: #ffffff;
-  border-radius: 16rpx;
-  overflow: hidden;
-  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
+  padding: 100rpx 40rpx 60rpx;
+  border-bottom: 20rpx solid #F8F9FA;
+  box-sizing: border-box;
+}
+
+.login-prompt, .user-info {
+  display: flex;
+  align-items: center;
+}
+
+.avatar-placeholder, .avatar {
+  width: 128rpx;
+  height: 128rpx;
+  border-radius: 64rpx;
+  background-color: #F5F5F5;
+  margin-right: 32rpx;
+  border: 4rpx solid #F0F0F0;
+}
+
+.avatar-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48rpx;
+  color: #CCCCCC;
+}
+
+.user-detail, .login-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #1A1A1A;
+  margin-bottom: 12rpx;
+}
+
+.user-desc, .user-status {
+  font-size: 26rpx;
+  color: #999999;
+}
+
+/* 菜单列表区域 */
+.menu-group {
+  width: 100%;
+  background-color: #ffffff;
+}
+
+.margin-top {
+  margin-top: 0;
+  border-top: 20rpx solid #F8F9FA;
 }
 
 .menu-item {
-  padding: 32rpx;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 32rpx;
-  color: #4096FF;
-  border-bottom: 1rpx solid #E0E0E0;
+  padding: 36rpx 40rpx;
+  background-color: #ffffff;
+  border-bottom: 1rpx solid #F0F0F0;
+  box-sizing: border-box;
 }
 
 .menu-item:last-child {
   border-bottom: none;
 }
 
-.menu-item text:last-child {
-  color: #999999;
-  font-size: 28rpx;
+.menu-left {
+  display: flex;
+  align-items: center;
 }
 
+.menu-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-sub-text {
+  font-size: 22rpx;
+  color: #999999;
+  margin-top: 4rpx;
+}
+
+.highlight-item {
+  background-color: #fff9f9 !important; /* 浅粉色背景增加区别度 */
+}
+
+.red-icon {
+  filter: drop-shadow(0 0 2px rgba(255,0,0,0.1));
+}
+
+.title-row {
+  display: flex;
+  align-items: center;
+}
+
+.new-badge {
+  font-size: 18rpx;
+  background-color: #FF4D4F;
+  color: #FFFFFF;
+  padding: 2rpx 8rpx;
+  border-radius: 4rpx;
+  margin-left: 12rpx;
+  font-weight: normal;
+}
+
+.menu-icon {
+  font-size: 38rpx;
+  margin-right: 28rpx;
+}
+
+.menu-text {
+  font-size: 32rpx;
+  color: #333333;
+}
+
+.menu-arrow {
+  font-size: 44rpx;
+  color: #DDDDDD;
+}
+
+.menu-item:active {
+  background-color: #F9F9F9;
+}

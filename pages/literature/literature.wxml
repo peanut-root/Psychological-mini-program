@@ -1,13 +1,40 @@
 <!--pages/literature/literature.wxml-->
 <view class="container">
-  <view class="header">
-    <view class="back-btn" bindtap="goBack">← 返回</view>
-    <text class="header-title">最新文献</text>
+  <!-- 搜索框 -->
+  <view class="search-section">
+    <view class="search-box" bindtap="goSearch">
+      <text class="search-icon">🔍</text>
+      <text class="search-placeholder">搜索文献、作者、关键词...</text>
+    </view>
   </view>
-  <view class="main-content">
-    <view class="literature-list">
-      <view class="literature-item" wx:for="{{literatureList}}" wx:key="id" bindtap="navigateToDetail" data-id="{{item.id}}">
-        <text class="literature-title">{{item.title}}</text>
+
+  <!-- 分类标签 -->
+  <view class="category-section">
+    <scroll-view class="category-scroll" scroll-x>
+      <view class="category-list">
+        <view 
+          class="category-item {{currentCategory === item.id ? 'active' : ''}}" 
+          wx:for="{{categories}}" 
+          wx:key="id"
+          bindtap="onCategoryChange"
+          data-id="{{item.id}}"
+        >
+          {{item.name}}
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 文献列表 -->
+  <view class="literature-list">
+    <view class="literature-item" wx:for="{{filteredLiteratureList || literatureList}}" wx:key="id" bindtap="navigateToDetail" data-id="{{item.id}}">
+      <view class="item-header">
+        <view class="tag">{{item.tag}}</view>
+      </view>
+      <text class="literature-title">{{item.title}}</text>
+      <text class="literature-summary">{{item.summary}}</text>
+      <view class="item-footer">
+        <text class="like-count">❤ {{item.likes}}</text>
       </view>
     </view>
   </view>

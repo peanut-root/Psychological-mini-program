@@ -29,7 +29,7 @@ Page({
     }
   },
 
-  // 初始化10个数字泡泡，随机分布
+  // 初始化10个数字泡泡，网格分布 to prevent overlap
   initBubbles() {
     const colors = [
       '#FF6B9D', '#4ECDC4', '#95E1D3', '#F38181', '#AA96DA',
@@ -40,14 +40,25 @@ Page({
     const bubbleRadius = 60 // 泡泡半径rpx
     const bounds = this.containerBounds
     
-    // 生成10个泡泡，随机初始位置和速度
+    // Calculate grid dimensions to fit 10 bubbles
+    const cols = 4;
+    const rows = 3; // ceil(10/4) = 3
+    
+    // Generate 10 bubbles with grid-based initial positions
     for (let i = 0; i < 10; i++) {
-      // 随机位置，确保在容器内
-      const x = bounds.left + bubbleRadius + Math.random() * (bounds.right - bounds.left - bubbleRadius * 2)
-      const y = bounds.top + bubbleRadius + Math.random() * (bounds.bottom - bounds.top - bubbleRadius * 2)
+      const col = i % cols;
+      const row = Math.floor(i / cols);
       
-      // 随机速度（rpx/帧）
-      const speed = 0.5 + Math.random() * 0.8 // 0.5-1.3 rpx/帧
+      // Calculate grid cell dimensions
+      const cellWidth = (bounds.right - bounds.left) / cols;
+      const cellHeight = (bounds.bottom - bounds.top) / rows;
+      
+      // Position in the center of each grid cell
+      const x = bounds.left + col * cellWidth + cellWidth / 2;
+      const y = bounds.top + row * cellHeight + cellHeight / 2;
+      
+      // Random speed (rpx/frame)
+      const speed = 0.2 + Math.random() * 0.4 // 0.2-0.6 rpx/帧，减慢移动速度
       const angle = Math.random() * Math.PI * 2
       
       bubbles.push({
@@ -164,21 +175,30 @@ Page({
     }, 16) // 约60fps
   },
 
-  // 碰撞后变色
+  // 碰撞后变色 - 使用随机颜色，但避免过浅的颜色
   changeColorOnCollision(bubble) {
     const colorPalette = [
       '#FF6B9D', '#4ECDC4', '#95E1D3', '#F38181', '#AA96DA',
       '#FCBAD3', '#FFD3A5', '#A8E6CF', '#FFD89B', '#C7CEEA',
       '#FFB6C1', '#87CEEB', '#98D8C8', '#F7DC6F', '#BB8FCE'
-    ]
+    ];
     
-    // 随机选择新颜色（不选择当前颜色）
-    let newColor
+    let newColor;
+    let attempts = 0;
+    const maxAttempts = 50; // 防止无限循环
+    
+    // 循环查找不是当前颜色且不太浅的颜色
     do {
-      newColor = colorPalette[Math.floor(Math.random() * colorPalette.length)]
-    } while (newColor === bubble.color)
+      newColor = colorPalette[Math.floor(Math.random() * colorPalette.length)];
+      attempts++;
+      
+      // 如果尝试次数过多，就接受当前颜色以避免卡住
+      if (attempts >= maxAttempts) {
+        break;
+      }
+    } while (newColor === bubble.color && attempts < maxAttempts);
     
-    bubble.color = newColor
+    bubble.color = newColor;
   },
 
   // 点击泡泡

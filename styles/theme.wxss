@@ -1,0 +1,30 @@
+/* Theme Palette - Yellow Background Refresh */
+/* Single source of truth for app-wide yellow theme colors */
+/* Usage: Import this file in page WXSS: @import "../../styles/theme.wxss"; */
+/* Apply classes to root container: class="bg-app-yellow page-fill" */
+
+/* Background: Light warm yellow for main pages */
+.bg-app-yellow {
+  background-color: #FFF6D8;
+}
+
+/* Text colors for content directly on yellow background */
+/* Primary text: High contrast for headings and main content (≥4.5:1) */
+.text-on-yellow-primary {
+  color: #1F1F1F;
+}
+
+/* Secondary text: Readable contrast for supporting text (≥3:1) */
+.text-on-yellow-secondary {
+  color: #5A5A5A;
+}
+
+/* Button text color for buttons placed on yellow */
+.btn-on-yellow {
+  color: #1A1A1A;
+}
+
+/* Optional helper: Full viewport height wrapper */
+.page-fill {
+  min-height: 100vh;
+}

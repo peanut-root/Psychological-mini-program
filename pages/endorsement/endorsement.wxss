@@ -1,0 +1,185 @@
+.endorsement-wrapper {
+  min-height: 100vh;
+  background-color: #F8F9FA;
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+}
+
+.selector-section {
+  background-color: #ffffff;
+  padding: 30rpx 40rpx;
+  border-bottom: 1rpx solid #F0F0F0;
+}
+
+.disease-picker {
+  background: #F5F7FA;
+  padding: 24rpx 32rpx;
+  border-radius: 12rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1rpx solid #E0E0E0;
+}
+
+.current-disease {
+  font-size: 32rpx;
+  color: #333333;
+  font-weight: bold;
+}
+
+.content-scroll {
+  flex: 1;
+  padding-bottom: 180rpx;
+}
+
+.intro-card {
+  margin: 30rpx 40rpx;
+  background: linear-gradient(135deg, #4096FF 0%, #1890FF 100%);
+  padding: 40rpx;
+  border-radius: 24rpx;
+  color: #ffffff;
+}
+
+.intro-title {
+  font-size: 36rpx;
+  font-weight: bold;
+}
+
+.intro-desc {
+  font-size: 26rpx;
+  margin-top: 16rpx;
+  display: block;
+}
+
+.section-group {
+  margin-bottom: 40rpx;
+}
+
+.group-header {
+  display: flex;
+  align-items: center;
+  padding: 0 40rpx;
+  margin-bottom: 24rpx;
+}
+
+.header-line {
+  width: 8rpx;
+  height: 32rpx;
+  background-color: #4096FF;
+  border-radius: 4rpx;
+  margin-right: 16rpx;
+}
+
+.group-title {
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.question-block {
+  background: #ffffff;
+  margin: 0 40rpx 30rpx;
+  padding: 30rpx;
+  border-radius: 20rpx;
+}
+
+.q-header {
+  margin-bottom: 12rpx;
+}
+
+.q-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333333;
+}
+
+.q-hint {
+  font-size: 24rpx;
+  color: #4096FF;
+}
+
+.q-aux-hint {
+  font-size: 24rpx;
+  color: #888888;
+  margin-bottom: 20rpx;
+  font-style: italic;
+}
+
+.options-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.option-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24rpx;
+  border-radius: 12rpx;
+  background-color: #F9F9F9;
+  border: 1rpx solid #F0F0F0;
+  transition: all 0.2s;
+}
+
+.option-selected {
+  background-color: #E6F4FF;
+  border-color: #4096FF;
+}
+
+.option-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.option-label {
+  font-size: 28rpx;
+  color: #333333;
+  font-weight: 500;
+}
+
+.option-hint {
+  font-size: 22rpx;
+  color: #888888;
+  margin-top: 8rpx;
+}
+
+.check-box {
+  width: 36rpx;
+  height: 36rpx;
+  border: 2rpx solid #CCCCCC;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 20rpx;
+}
+
+.checked {
+  background-color: #4096FF;
+  border-color: #4096FF;
+}
+
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 30rpx 40rpx calc(30rpx + env(safe-area-inset-bottom));
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.save-btn {
+  background: #4096FF;
+  color: #fff;
+  border-radius: 50rpx;
+  font-size: 30rpx; /* 稍微调小一点字体确保在一行 */
+  font-weight: bold;
+  width: 100% !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap; /* 强制不换行 */
+  height: 96rpx;
+}
