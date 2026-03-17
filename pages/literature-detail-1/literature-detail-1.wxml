@@ -23,7 +23,7 @@
       </view>
       <view class="action-item" bindtap="showCommentInput">
         <text class="action-icon">💬</text>
-        <text class="action-text">评论</text>
+        <text class="action-text">{{article.comments.length}}</text>
       </view>
       <view class="action-item" bindtap="onShare">
         <text class="action-icon">📤</text>

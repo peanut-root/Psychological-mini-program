@@ -12,71 +12,87 @@ Page({
       { id: 'schizophrenia', name: '精神分裂症' },
       { id: 'adhd', name: '注意缺陷多动障碍' },
       { id: 'substance', name: '物质滥用' },
-      { id: 'phobia', name: '恐惧症' }
+      { id: 'phobia', name: '恐惧症' },
+      { id: 'somatic', name: '躯体化障碍' },
+      { id: 'paraphilia', name: '性偏好障碍' }
     ],
     literatureList: [
       { 
         id: 1, 
-        title: '抑郁症的成因与治疗进展',
+        title: '抑郁症',
         tag: '抑郁症',
         likes: 0,
-        summary: '深入探讨抑郁症的生物、心理和社会因素，以及最新的治疗方法。'
+        summary: '包含病名、俗称、症状、DSM-5诊断标准、治疗方式与常见误解澄清等内容。'
       },
       { 
         id: 2, 
-        title: '焦虑症的认知行为治疗策略',
+        title: '焦虑症',
         tag: '焦虑症',
         likes: 0,
-        summary: '详细介绍焦虑症的认知行为治疗理论基础与实践应用。'
+        summary: '包含俗称、症状、DSM-5诊断标准、治疗方式与常见误解澄清等内容。'
       },
       { 
         id: 3, 
-        title: '双相情感障碍的情绪调节机制',
+        title: '双相情感障碍',
         tag: '双相情感障碍',
         likes: 0,
-        summary: '分析双相情感障碍患者情绪波动的神经机制及应对策略。'
+        summary: '包含俗称、症状、DSM-5诊断标准、治疗方式与常见误解澄清等内容。'
       },
       { 
         id: 4, 
-        title: '强迫症的神经环路研究',
+        title: '强迫症',
         tag: '强迫症',
         likes: 0,
-        summary: '探索强迫症相关的脑区活动模式与干预靶点。'
+        summary: '包含俗称、症状、DSM-5诊断标准、治疗方式与常见误解澄清等内容。'
       },
       { 
         id: 5, 
-        title: 'PTSD的心理创伤恢复路径',
+        title: '创伤后应激障碍',
         tag: '创伤应激',
         likes: 0,
-        summary: '研究创伤后应激障碍的康复过程与有效干预措施。'
+        summary: '包含PTSD俗称、症状、诊断标准、治疗方式与常见误解澄清等内容。'
       },
       { 
         id: 6, 
-        title: '精神分裂症的早期识别与干预',
+        title: '精神分裂症',
         tag: '精神分裂症',
         likes: 0,
-        summary: '探讨精神分裂症的早期症状识别与预防性治疗策略。'
+        summary: '包含俗称、症状、ICD-11诊断标准、治疗方式与常见误解澄清等内容。'
       },
       { 
         id: 7, 
-        title: 'ADHD儿童的行为管理方法',
+        title: '注意缺陷多动障碍',
         tag: '注意缺陷多动障碍',
         likes: 0,
-        summary: '提供针对ADHD儿童的有效行为管理技巧与教育方案。'
+        summary: '包含俗称、症状、DSM-5诊断标准、治疗方式与常见误解澄清等内容。'
       },
       { 
         id: 8, 
-        title: '物质依赖的综合治疗模式',
+        title: '物质使用障碍',
         tag: '物质滥用',
         likes: 0,
-        summary: '介绍物质依赖的生物-心理-社会综合治疗方法。'
+        summary: '包含俗称、症状、ICD-11诊断标准、治疗方式与常见误解澄清等内容。'
       },
       { 
         id: 9, 
-        title: '特定恐惧症的暴露疗法',
+        title: '特定恐惧症',
         tag: '恐惧症',
         likes: 0,
-        summary: '分析特定恐惧症暴露疗法的技术要点与疗效评估。'
+        summary: '包含俗称、症状、诊断要点、治疗方式与常见误解澄清等内容。'
+      },
+      { 
+        id: 10, 
+        title: '躯体化障碍',
+        tag: '躯体化障碍',
+        likes: 0,
+        summary: '包含俗称、症状、DSM-5诊断标准、治疗方式与常见误解澄清等内容。'
+      },
+      { 
+        id: 11, 
+        title: '性偏好障碍',
+        tag: '性偏好障碍',
+        likes: 0,
+        summary: '包含俗称、症状、诊断标准、治疗方式与常见误解澄清等内容。'
       }
     ]
   },
@@ -110,7 +126,9 @@ Page({
         (category === 'schizophrenia' && item.tag.includes('精神分裂')) ||
         (category === 'adhd' && item.tag.includes('注意缺陷多动')) ||
         (category === 'substance' && (item.tag.includes('物质') || item.tag.includes('滥用'))) ||
-        (category === 'phobia' && item.tag.includes('恐惧'))
+        (category === 'phobia' && item.tag.includes('恐惧')) ||
+        (category === 'somatic' && (item.tag.includes('躯体') || item.tag.includes('躯体化'))) ||
+        (category === 'paraphilia' && (item.tag.includes('性偏好') || item.tag.includes('性欲倒错')))
       );
       
       this.setData({
