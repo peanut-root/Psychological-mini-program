@@ -278,6 +278,8 @@ Page({
   
     // 跳转到主界面（无需修改，本地存储的是文字数组）
     navigateToHome() {
+      wx.removeStorageSync('bubbleSkippedStep1')
+      wx.removeStorageSync('bubbleSkippedStep2')
       // 记录已完成引导
       wx.setStorageSync('hasOnboarded', true)
       
@@ -295,5 +297,15 @@ Page({
         url: '/pages/home/home'
       })
       }, 1000)
+    },
+
+    // 跳过第二页：直接进入首页，保留已选疾病（可不足 3 个）
+    onSkipTap() {
+      wx.setStorageSync('bubbleSkippedStep2', true)
+      wx.setStorageSync('hasOnboarded', true)
+      wx.setStorageSync('selectedNumbers', this.data.selectedNumbers || [])
+      wx.reLaunch({
+        url: '/pages/home/home'
+      })
     }
   })

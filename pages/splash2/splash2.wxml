@@ -37,6 +37,8 @@
       <view class="particle particle-7"></view>
     </view>
   </view>
+
+  <button class="skip-button" bindtap="onSkipTap">Skip</button>
 </view>
 
 

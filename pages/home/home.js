@@ -20,6 +20,16 @@ Page({
       return
     }
 
+    // 两页泡泡均点击 Skip：主页疾病科普区留空（不显示默认三项）
+    const skipped1 = wx.getStorageSync('bubbleSkippedStep1')
+    const skipped2 = wx.getStorageSync('bubbleSkippedStep2')
+    if (skipped1 && skipped2) {
+      this.setData({
+        scienceBlocks: []
+      })
+      return
+    }
+
     // 从本地存储获取第二个泡泡页选择的疾病
     const selectedDiseases = wx.getStorageSync('selectedNumbers')
     if (selectedDiseases && selectedDiseases.length === 3) {
@@ -111,6 +121,8 @@ Page({
   resetOnboarding() {
     wx.removeStorageSync('hasOnboarded')
     wx.removeStorageSync('selectedNumbers')
+    wx.removeStorageSync('bubbleSkippedStep1')
+    wx.removeStorageSync('bubbleSkippedStep2')
     wx.showToast({
       title: '已重置引导状态，请重启小程序',
       icon: 'none',

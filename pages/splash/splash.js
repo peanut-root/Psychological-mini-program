@@ -251,6 +251,7 @@ Page({
 
   // 点击跳过按钮，直接进入第二个泡泡页
   onSkipTap() {
+    wx.setStorageSync('bubbleSkippedStep1', true)
     this.navigateToSecondPage()
   },
 
@@ -270,6 +271,7 @@ Page({
 
   // 第一个泡泡页完成时的处理
   handleFirstStepComplete() {
+    wx.removeStorageSync('bubbleSkippedStep1')
     // 保存选择的数字到本地存储，区分第一步
     wx.setStorageSync('selectedNumbersStep1', this.data.selectedNumbers)
 
