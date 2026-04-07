@@ -43,4 +43,4 @@ This file provides guidance to Qoder (qoder.com) when working with code in this 
 - **Local Storage Keys**: `hasOnboarded`, `selectedNumbers`, `userInfo`, `lastEndorsement` are important storage keys used throughout the app.
 - **Navigation Pattern**: Most pages follow a pattern with `goBack()` function for navigation, and detail pages typically use `wx.navigateTo()` to navigate to specific content.
 - **Interactive Features**: Many pages include like, comment, and share functionality with associated UI elements and data structures.
-- **Disease Categories**: Core education covers major conditions (e.g. depression, anxiety, bipolar, OCD, PTSD, schizophrenia, ADHD, substance use, phobias); the literature library also lists **躯体化障碍** and **性偏好障碍** as additional articles (ids 10–11).
+- **Disease Categories**: Core education covers major conditions (e.g. depression, anxiety, bipolar, OCD, PTSD, schizophrenia, ADHD, substance use, phobias); the literature library also lists **躯体化障碍** and **性欲倒错** as additional articles (ids 10–11).

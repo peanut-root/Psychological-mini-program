@@ -14,7 +14,7 @@ Page({
       { id: 'substance', name: '物质滥用' },
       { id: 'phobia', name: '恐惧症' },
       { id: 'somatic', name: '躯体化障碍' },
-      { id: 'paraphilia', name: '性偏好障碍' }
+      { id: 'paraphilia', name: '性欲倒错' }
     ],
     literatureList: [
       { 
@@ -89,8 +89,8 @@ Page({
       },
       { 
         id: 11, 
-        title: '性偏好障碍',
-        tag: '性偏好障碍',
+        title: '性欲倒错',
+        tag: '性欲倒错',
         likes: 0,
         summary: '包含俗称、症状、诊断标准、治疗方式与常见误解澄清等内容。'
       }
@@ -128,7 +128,7 @@ Page({
         (category === 'substance' && (item.tag.includes('物质') || item.tag.includes('滥用'))) ||
         (category === 'phobia' && item.tag.includes('恐惧')) ||
         (category === 'somatic' && (item.tag.includes('躯体') || item.tag.includes('躯体化'))) ||
-        (category === 'paraphilia' && (item.tag.includes('性偏好') || item.tag.includes('性欲倒错')))
+        (category === 'paraphilia' && item.tag.includes('性欲倒错'))
       );
       
       this.setData({
