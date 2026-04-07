@@ -1,66 +1,65 @@
 # 心屿心理科普小程序
 
-这是一个心理科普类微信小程序，从HTML网页版本转换而来。
+基于微信原生小程序开发的「心屿」心理健康科普应用，界面与内容由早期 HTML/Tailwind 原型迁移而来；**当前唯一运行载体为小程序**（仓库内已无遗留 `.html` 页面）。
 
-## 项目结构
+## 技术说明
 
-```
-├── app.js              # 小程序入口文件
-├── app.json            # 小程序全局配置
-├── app.wxss            # 小程序全局样式
-├── sitemap.json        # 站点地图配置
-├── project.config.json # 项目配置文件
-└── pages/              # 页面目录
-    ├── index/          # 首页
-    ├── search/         # 搜索页
-    ├── my-page/        # 我的页面（TabBar）
-    ├── science/        # 科普页（TabBar）
-    ├── scale/          # 量表页（TabBar）
-    ├── interaction/    # 互动页（TabBar）
-    └── ...             # 其他页面
-```
+- 无 `package.json`、无 npm 构建链，使用**微信开发者工具**打开项目即可编译预览。
+- 全局入口：`app.js`、`app.json`、`app.wxss`。
+- 尺寸单位统一使用 `rpx`；主题色见 `styles/theme.wxss`。
 
-## 主要功能
+## 启动与预览
 
-1. **首页**：展示救助电话、量表、科普内容、互动功能等
-2. **心理科普**：心理健康知识科普
-3. **量表测评**：SCL-90等心理测评工具
-4. **互动功能**：AI助手、治愈游戏、心情树洞
-5. **我的**：个人信息、日志管理
+1. 安装 [微信开发者工具](https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html)。
+2. 导入本项目目录，可使用测试号 AppID。
+3. 保存代码后 IDE 会自动编译；可用「预览」扫码在真机查看。
 
-## 页面列表
+更详细的步骤见根目录 `预览说明.md`。
 
-- 首页 (index)
-- 搜索 (search)
-- 个人信息 (user-info)
-- 救助电话 (rescue)
-- 心情日志 (diary)
-- 天气日记 (weather)
-- 心理科普 (science) - TabBar
-- 量表 (scale) - TabBar
-- 互动中心 (interaction) - TabBar
-- 我的 (my-page) - TabBar
-- 疾病相关：抑郁症、焦虑症、双相、强迫症、躯体化、ADHD
-- AI助手、游戏、树洞
-- 文献列表及详情页
+## 导航与主要流程
 
-## 使用说明
+- **引导**：`pages/splash` → `pages/splash2`（首次启动；本地 `hasOnboarded` 控制是否跳过）。
+- **主页**：`pages/home`（根据引导选择的关注领域个性化展示）。
+- **底部 Tab 相关**：科普、量表、互动、我的等页面以 `app.json` 中注册顺序为准。
 
-1. 使用微信开发者工具打开此项目
-2. 在 `project.config.json` 中配置你的 `appid`
-3. 编译运行
+## 文献资料库（白皮书体例正文）
 
-## 注意事项
+列表页：`pages/literature/literature`  
+详情页：`pages/literature-detail/literature-detail`（通过 `?id=` 区分文章）
 
-- TabBar图标需要准备对应的图片文件放在 `images/` 目录下
-- 部分功能需要配置服务器接口
-- 样式已从Tailwind CSS转换为标准CSS，使用rpx单位适配小程序
+文献列表共 **11** 篇，支持顶部分类筛选（全部、抑郁症、焦虑症、双相情感障碍、强迫症、创伤应激、精神分裂症、注意缺陷多动障碍、物质滥用、恐惧症、**躯体化障碍**、**性偏好障碍**）。
 
-## 转换说明
+| id | 标题（列表展示） | 说明 |
+|----|------------------|------|
+| 1 | 抑郁症 | 病名、俗称、症状、DSM-5、治疗、误解澄清、病例等 |
+| 2 | 焦虑症 | 同上结构（广泛性焦虑等） |
+| 3 | 双相情感障碍 | DSM-5 分型与治疗 |
+| 4 | 强迫症 | DSM-5、ERP/药物等 |
+| 5 | 创伤后应激障碍 | PTSD 症状与诊断要点 |
+| 6 | 精神分裂症 | ICD-11 要点 |
+| 7 | 注意缺陷多动障碍 | DSM-5 |
+| 8 | 物质使用障碍 | ICD-11 核心症状与分级 |
+| 9 | 特定恐惧症 | 含「小众疾病分享」延伸阅读 |
+| 10 | 躯体化障碍 | DSM-5 躯体症状障碍 |
+| 11 | 性偏好障碍 | 诊断与治疗原则（科普向） |
 
-本项目从HTML网页版本转换而来，主要变更：
-- HTML标签转换为小程序WXML标签
-- Tailwind CSS类转换为WXSS样式
-- JavaScript逻辑适配小程序API
-- 页面路由改为小程序导航方式
+详情页内**点赞数、评论列表**使用本地存储键 `literature:article:{id}:*` 持久化，进入页面会刷新显示。
 
+另保留独立模板页（若从其它入口跳转）：`pages/literature-detail-1`～`literature-detail-3`，与列表主路径可能不同，日常以 `literature-detail?id=` 为准。
+
+## 其他功能模块（节选）
+
+- 疾病专题页：`pages/depression`、`anxiety`、`bipolar`、`ocd`、`somatic`、`adhd` 等。
+- 工具与互动：`pages/ai`、`game`、`treehole`、`diary`、`weather`、`search`、`rescue` 等。
+- 医院与背书：`pages/hospital`、`endorsement`、`endorsement-result`。
+
+完整页面清单以 `app.json` 的 `pages` 数组为准。
+
+## 资源与约束
+
+- 图片与图标放在 `images/`。
+- UI 与注释保持**简体中文**。
+
+## 仓库维护说明
+
+历史上曾保留与小程序页面同名的根目录 `.html` 作为旧版预览，已与小程序重复且易混淆，**已全部删除**。后续修改请以 `pages/` 下 `.wxml` / `.wxss` / `.js` / `.json` 为准。

@@ -3,12 +3,11 @@
 This file provides guidance to Qoder (qoder.com) when working with code in this repository.
 
 ## Project Overview
-"心屿" (Mind Island) is a native WeChat Mini Program focused on mental health. It provides psychological assessments,科普 (knowledge education), and interactive tools. The project was migrated from a legacy HTML/Tailwind CSS web project.
+"心屿" (Mind Island) is a native WeChat Mini Program focused on mental health. It provides psychological assessments,科普 (knowledge education), and interactive tools. The project was migrated from a legacy HTML/Tailwind CSS web project; **root-level legacy `.html` prototypes have been removed**—the active app is the Mini Program only.
 
 ## Development Environment & Workflow
 - **No CLI Tools**: This is a pure native WeChat Mini Program. There is no `package.json`, no `npm`, and no CLI-based build or test scripts.
 - **Development Tool**: Use **WeChat Developer Tools (微信开发者工具)** exclusively for compilation, simulation, and debugging.
-- **Legacy Files**: You will see `.html` files in the root directory (e.g., `adhd.html`, `mainpageUI.html`). These are legacy source files and are **not** part of the active Mini Program runtime. Do not modify them unless explicitly asked to update the legacy source.
 - **Workflow**: Proceed with UI/UX adjustments directly in `.wxml`, `.wxss`, `.js`, and `.json` files. Saving triggers auto-compilation in the IDE.
 
 ## High-Level Architecture
@@ -37,11 +36,11 @@ This file provides guidance to Qoder (qoder.com) when working with code in this 
 - **Adding a Page**: Create the 4-file structure in `pages/`, register it in `app.json`, and ensure it imports `theme.wxss` if it's a main content page.
 - **Modifying UI**: Update `.wxml` for structure and `.wxss` for styling. Use the `rpx` system.
 - **Onboarding Flow**: The app has a two-step onboarding process (`splash` and `splash2`) that only runs on first launch. The `hasOnboarded` flag in local storage controls this behavior.
-- **Literature System**: The literature system consists of a main page (`pages/literature/literature`) and detail pages (`pages/literature-detail/`) with interactive features like comments, likes, and sharing.
+- **Literature System**: Main list `pages/literature/literature` (category filters); generic detail `pages/literature-detail/literature-detail?id=1..11` loads per-article whitepaper-style content; likes/comments persist under keys like `literature:article:{id}:*`. Optional standalone templates `literature-detail-1`–`3` may exist for legacy links.
 - **Medical Endorsement System**: The endorsement system (`pages/endorsement/`) allows users to select diseases and symptoms, storing results in local storage as `lastEndorsement`.
 
 ## Key Components & Data Flow
 - **Local Storage Keys**: `hasOnboarded`, `selectedNumbers`, `userInfo`, `lastEndorsement` are important storage keys used throughout the app.
 - **Navigation Pattern**: Most pages follow a pattern with `goBack()` function for navigation, and detail pages typically use `wx.navigateTo()` to navigate to specific content.
 - **Interactive Features**: Many pages include like, comment, and share functionality with associated UI elements and data structures.
-- **Disease Categories**: The app covers 9 major mental health conditions: depression, anxiety, bipolar disorder, OCD, PTSD, schizophrenia, ADHD, substance abuse, and phobias.
+- **Disease Categories**: Core education covers major conditions (e.g. depression, anxiety, bipolar, OCD, PTSD, schizophrenia, ADHD, substance use, phobias); the literature library also lists **躯体化障碍** and **性偏好障碍** as additional articles (ids 10–11).
