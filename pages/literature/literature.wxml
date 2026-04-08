@@ -40,3 +40,6 @@
   </view>
 </view>
 
+<!-- Floating AI Ball -->
+<floating-ball />
+

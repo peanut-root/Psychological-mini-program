@@ -4,9 +4,21 @@
     <view class="back-btn" bindtap="goBack">← 返回</view>
     <text class="header-title">AI 心理助手</text>
   </view>
-  <view class="main-content">
-    <view class="content-card">
-      <text class="content-text">在这里与 AI 助手进行对话。</text>
+  <view class="chat-container">
+    <view class="debug-bar">{{debugText}}</view>
+    <scroll-view class="messages" scroll-y="true" scroll-with-animation="true" scroll-top="{{messages.length}}">
+      <view class="message-list">
+        <view wx:for="{{messages}}" wx:key="index" class="message {{item.role}}">
+          <view class="message-content">{{item.content}}</view>
+        </view>
+        <view wx:if="{{isLoading}}" class="message assistant">
+          <view class="message-content">AI 正在思考...</view>
+        </view>
+      </view>
+    </scroll-view>
+    <view class="input-area">
+      <input class="input" placeholder="输入你的问题..." value="{{inputValue}}" bindinput="onInputChange" bindconfirm="sendMessage" />
+      <button class="send-btn" bindtap="sendMessage" disabled="{{!inputValue}}">发送</button>
     </view>
   </view>
 </view>
