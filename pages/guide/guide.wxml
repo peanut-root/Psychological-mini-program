@@ -1,5 +1,8 @@
 <!--pages/guide/guide.wxml-->
 <view class="container">
+  <!-- 背景图片层 -->
+  <image class="bg-image" src="../../images/bg-main.jpg" mode="aspectFill"></image>
+  
   <!-- 三个指南卡片 -->
   <view class="guide-list">
     <view class="guide-card" bindtap="navigateToHospital">

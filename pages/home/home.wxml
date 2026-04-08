@@ -1,5 +1,9 @@
 <!--pages/home/home.wxml-->
+<!-- 放置我们新的全局背景图片 -->
+<image class="global-bg" src="/6ba2d4d3171c6cdc8ae1cab8114411ea.jpg" mode="aspectFill"></image>
+
 <view class="container bg-app-yellow page-fill">
+  
   <!-- 主内容区 -->
   <scroll-view class="main-content" scroll-y>
     <!-- 顶部两栏：救助电话 + 就诊指南 -->
@@ -50,4 +54,3 @@
   <!-- Floating AI Ball -->
   <floating-ball />
 </view>
-

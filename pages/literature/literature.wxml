@@ -1,5 +1,8 @@
 <!--pages/literature/literature.wxml-->
 <view class="container">
+  <!-- 背景图片层 -->
+  <image class="bg-image" src="../../images/bg-main.jpg" mode="aspectFill"></image>
+  
   <!-- 搜索框 -->
   <view class="search-section">
     <view class="search-box" bindtap="goSearch">

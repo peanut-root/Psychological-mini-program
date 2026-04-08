@@ -5,7 +5,7 @@
 const API_KEY = '66b1c0f9-a6b7-4359-8afa-a9341f2c630e'
 const API_URL = 'https://ark.cn-beijing.volces.com/api/v3/responses'
 const MODEL_NAME = 'doubao-seed-2-0-pro-260215'
-const TIMEOUT = 60000 // 👈 这里修改为 60000 (60秒)
+const TIMEOUT = 60000
 
 /**
  * Send chat messages to the AI service.

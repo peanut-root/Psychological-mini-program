@@ -3,12 +3,24 @@
 
 .container {
   min-height: 100vh;
-  background-color: #FFFFFF;
+  background-color: transparent;
   padding-bottom: 200rpx; /* 预留底部bar空间 */
+  position: relative;
+}
+
+.bg-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
 }
 
 .main-content {
   padding: 24rpx;
+  position: relative;
+  z-index: 1;
 }
 
 .section {

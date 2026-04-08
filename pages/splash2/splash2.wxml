@@ -1,5 +1,8 @@
 <!--pages/splash2/splash2.wxml-->
 <view class="container bg-app-yellow page-fill">
+  <!-- 背景图片层 -->
+  <image class="bg-image" src="../../images/bg-main.jpg" mode="aspectFill"></image>
+  
   <view class="title-area">
     <text class="main-title">心屿</text>
     <text class="sub-title">请选择3个您感兴趣的心理疾病，开启我们的心理之旅</text>

@@ -36,7 +36,7 @@
     "navigationBarBackgroundColor": "#ffffff",
     "navigationBarTitleText": "心屿",
     "navigationBarTextStyle": "black",
-    "backgroundColor": "#E6F4FF"
+    "backgroundColor": "#F5F5F5"
   },
   "style": "v2",
   "permission": {
@@ -46,4 +46,3 @@
   },
   "sitemapLocation": "sitemap.json"
 }
-

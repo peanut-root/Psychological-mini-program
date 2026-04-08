@@ -5,26 +5,11 @@
 
 /* Background: Light warm yellow for main pages */
 .bg-app-yellow {
-  background-color: #FFF6D8;
+  /* 设置为透明，让底层的 global-bg 图片能完全透出来 */
+  background: transparent;
 }
 
-/* Text colors for content directly on yellow background */
-/* Primary text: High contrast for headings and main content (≥4.5:1) */
-.text-on-yellow-primary {
-  color: #1F1F1F;
-}
-
-/* Secondary text: Readable contrast for supporting text (≥3:1) */
-.text-on-yellow-secondary {
-  color: #5A5A5A;
-}
-
-/* Button text color for buttons placed on yellow */
-.btn-on-yellow {
-  color: #1A1A1A;
-}
-
-/* Optional helper: Full viewport height wrapper */
 .page-fill {
   min-height: 100vh;
+  width: 100%;
 }
