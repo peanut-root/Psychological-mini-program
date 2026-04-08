@@ -1,5 +1,8 @@
 <!--pages/scale/scale.wxml-->
 <view class="container">
+  <!-- 背景图片层 -->
+  <image class="bg-image" src="../../images/bg-main.jpg" mode="aspectFill"></image>
+  
   <view class="main-content">
     <view class="scale-card">
       <text class="scale-title">SCL-90 量表</text>

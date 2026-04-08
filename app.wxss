@@ -1,18 +1,22 @@
 /**app.wxss**/
 page {
-  background-color: transparent;
+  /* 微信小程序 WXSS 不支持引用本地图片，已移除 */
+  /* 确保背景色透明，以便背景图片显示 */
+  background-color: transparent; 
   font-family: -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif;
   color: #333333;
 }
 
 .container {
-  height: 100%;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
   padding: 200rpx 0;
   box-sizing: border-box;
+  /* 移除container的背景设置，避免覆盖或重复 */
+  background: none;
 }
 
 /* 颜色变量 */
@@ -170,3 +174,12 @@ page {
   display: none;
 }
 
+/* === 全局背景图片样式（请在 WXML 中搭配 <image> 标签使用） === */
+.global-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -9999; /* 确保背景在最底层 */
+}

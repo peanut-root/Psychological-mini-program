@@ -1,5 +1,8 @@
 <!--pages/literature-detail/literature-detail.wxml-->
 <view class="container">
+  <!-- 背景图片层 -->
+  <image class="bg-image" src="../../images/bg-main.jpg" mode="aspectFill"></image>
+  
   <view class="main-content">
     <view class="detail-card">
       <text class="detail-title">{{article.title}}</text>

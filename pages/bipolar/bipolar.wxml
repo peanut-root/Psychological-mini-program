@@ -1,5 +1,8 @@
 <!--pages/bipolar/bipolar.wxml-->
 <view class="container">
+  <!-- 背景图片层 -->
+  <image class="bg-image" src="../../images/bg-main.jpg" mode="aspectFill"></image>
+  
   <view class="header">
     <view class="back-btn" bindtap="goBack">← 返回</view>
     <text class="header-title">双相情感障碍</text>

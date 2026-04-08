@@ -1,4 +1,7 @@
 <view class="container">
+  <!-- 背景图片层 -->
+  <image class="bg-image" src="../../images/bg-main.jpg" mode="aspectFill"></image>
+  
   <view class="main-content">
     <view class="rescue-card">
       <view class="card-header">

@@ -1,5 +1,8 @@
 <!--pages/depression/depression.wxml-->
 <view class="container">
+  <!-- 背景图片层 -->
+  <image class="bg-image" src="../../images/bg-main.jpg" mode="aspectFill"></image>
+  
   <view class="header">
     <view class="back-btn" bindtap="goBack">← 返回</view>
     <text class="header-title">抑郁症</text>
