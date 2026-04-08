@@ -1,4 +1,6 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "floating-ball": "../../components/floating-ball/floating-ball"
+  },
   "navigationBarTitleText": "强迫症"
 }

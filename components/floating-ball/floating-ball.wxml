@@ -1,0 +1,53 @@
+<!--components/floating-ball/floating-ball.wxml-->
+<!-- Floating Ball (hidden when panel is open) -->
+<view
+  class="floating-ball {{isDragging ? '' : 'ball-transition'}}"
+  style="left:{{ballX}}rpx; top:{{ballY}}rpx;"
+  bindtouchstart="onTouchStart"
+  bindtouchmove="onTouchMove"
+  bindtouchend="onTouchEnd"
+  bindtap="onBallTap"
+  aria-label="AI 心理助手"
+  wx:if="{{!panelOpen}}"
+>
+  <image class="ball-icon" src="/images/floating-ball-icon.png" mode="aspectFit"></image>
+</view>
+
+<!-- Chat Panel Overlay -->
+<view class="panel-mask {{panelOpen ? 'panel-mask-visible' : ''}}" bindtap="closePanel" wx:if="{{panelOpen}}"></view>
+<view class="panel-container {{panelOpen ? 'panel-slide-in' : ''}}" style="width:{{panelWidth}}rpx; {{keyboardHeight > 0 ? 'bottom:' + keyboardHeight + 'px;' : ''}}" wx:if="{{panelOpen}}">
+  <!-- Header -->
+  <view class="panel-header">
+    <text class="panel-title">AI 心理助手</text>
+  </view>
+
+  <!-- Message List -->
+  <scroll-view class="panel-messages" scroll-y scroll-into-view="{{scrollToId}}" scroll-with-animation>
+    <view wx:for="{{messages}}" wx:key="id" id="msg-{{index}}" class="message-bubble {{item.role === 'user' ? 'msg-user' : 'msg-assistant'}}">
+      <text class="message-text">{{item.content}}</text>
+      <!-- Retry button for error messages -->
+      <view wx:if="{{item.status === 'error'}}" class="retry-btn" bindtap="retryMessage" data-index="{{index}}">
+        <text class="retry-text">重试</text>
+      </view>
+    </view>
+    <view style="height: 16rpx;"></view>
+  </scroll-view>
+
+  <!-- Input Area -->
+  <view class="panel-input" style="bottom:{{keyboardHeight}}px;">
+    <textarea
+      class="input-textarea"
+      value="{{inputText}}"
+      bindinput="onInput"
+      placeholder="输入消息..."
+      auto-height
+      maxlength="500"
+      adjust-position="{{false}}"
+      bindfocus="onInputFocus"
+      bindblur="onInputBlur"
+    ></textarea>
+    <view class="send-btn" bindtap="sendMessage">
+      <text class="send-text">发送</text>
+    </view>
+  </view>
+</view>
