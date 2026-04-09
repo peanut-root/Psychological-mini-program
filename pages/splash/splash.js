@@ -93,6 +93,27 @@ Page({
       
       for (let i = 0; i < bubbles.length; i++) {
         const bubble = bubbles[i]
+
+        // 处理戳破时的缩小消失动画
+        if (bubble.popping) {
+          bubble.popStep = (bubble.popStep || 0) + 1
+          
+          if (bubble.popStep <= 4) {
+            bubble.radius *= 1.15 // 短暂放大膨胀
+            bubble.x += (Math.random() - 0.5) * 6 // 震动
+            bubble.y += (Math.random() - 0.5) * 6
+          } else {
+            bubble.radius *= 0.7 // 快速缩小
+          }
+          
+          if (bubble.radius < 2) {
+            bubble.popping = false
+            bubble.popped = true // 标记为已戳破，触发隐藏
+          }
+          needUpdate = true
+          continue
+        }
+
         if (bubble.popped) continue
         
         // 更新位置
@@ -112,7 +133,7 @@ Page({
         // 泡泡之间碰撞检测
         for (let j = i + 1; j < bubbles.length; j++) {
           const other = bubbles[j]
-          if (other.popped) continue
+          if (other.popped || other.popping) continue
           
           const dx = other.x - bubble.x
           const dy = other.y - bubble.y
@@ -217,8 +238,8 @@ Page({
       return
     }
     
-    // 如果已经被戳破，忽略
-    if (bubble.popped) {
+    // 如果已经被戳破或正在动画中，忽略
+    if (bubble.popped || bubble.popping) {
       return
     }
     
@@ -227,7 +248,7 @@ Page({
     
     // 选择并戳破
     bubbles[id].selected = true
-    bubbles[id].popped = true
+    bubbles[id].popping = true // 开始动画，延迟设置为 popped
     // 停止这个泡泡的运动
     bubbles[id].vx = 0
     bubbles[id].vy = 0
@@ -300,4 +321,3 @@ Page({
     })
   }
 })
-

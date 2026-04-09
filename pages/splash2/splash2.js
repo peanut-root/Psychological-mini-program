@@ -21,7 +21,8 @@ Page({
     textConfig: {
       fontSize: 24, // 文字大小（rpx），决定文字基础尺寸
       padding: 20, // 文字与泡泡边缘的内边距（rpx），避免文字紧贴泡泡
-      singleCharWidth: 26 // 单个字符/汉字的估算宽度（rpx），适配大多数字体
+      singleCharWidth: 26, // 单个字符/汉字的估算宽度（rpx），适配大多数字体
+      maxCharsPerLine: 4 // 新增：每行最大字符数，用于文字换行
     },
   
     onLoad() {
@@ -51,7 +52,7 @@ Page({
       
       const bubbles = []
       const bounds = this.containerBounds
-      const { fontSize, padding, singleCharWidth } = this.textConfig
+      const { fontSize, padding, singleCharWidth, maxCharsPerLine } = this.textConfig // Get maxCharsPerLine
       
       // 生成11个泡泡，网格分布 to prevent overlap，大小跟随文字
       // Calculate grid dimensions to fit 11 bubbles
@@ -60,12 +61,33 @@ Page({
       
       for (let i = 0; i < 11; i++) {
         const currentText = customTexts[i]
+
+        // --- Start: Text Wrapping Logic ---
+        let wrappedLines = [];
+        let longestLineLength = 0;
+        if (currentText.length > maxCharsPerLine) {
+            let tempText = currentText;
+            while (tempText.length > 0) {
+                const line = tempText.substring(0, maxCharsPerLine);
+                wrappedLines.push(line);
+                if (line.length > longestLineLength) {
+                    longestLineLength = line.length;
+                }
+                tempText = tempText.substring(maxCharsPerLine);
+            }
+        } else {
+            wrappedLines.push(currentText);
+            longestLineLength = currentText.length;
+        }
+        const displayText = wrappedLines.join('\n'); // Join with newline for display
+        const numLines = wrappedLines.length;
+        // --- End: Text Wrapping Logic ---
         
         // 【关键2】计算文字所需宽高，动态生成泡泡半径
-        // 1. 计算文字宽度：字符数 * 单个字符宽度（多文字适配）
-        const textWidth = currentText.length * singleCharWidth
-        // 2. 计算文字高度：字体大小（近似，移动端文字高度与字体大小接近）
-        const textHeight = fontSize
+        // 1. 计算文字宽度：最长行字符数 * 单个字符宽度
+        const textWidth = longestLineLength * singleCharWidth
+        // 2. 计算文字高度：行数 * 字体大小
+        const textHeight = numLines * fontSize
         // 3. 计算泡泡最小半径：取文字宽高的最大值 + 内边距，再取一半（圆形泡泡需容纳全部文字）
         const bubbleRadius = Math.max(textWidth, textHeight) / 2 + padding
         
@@ -88,7 +110,8 @@ Page({
         bubbles.push({
           id: i,
           // 【关键4】替换number为text，存储自定义文字
-          text: currentText,
+          text: displayText, // Store wrapped text
+          originalText: currentText, // Keep original for reference if needed
           x: x,
           y: y,
           vx: Math.cos(angle) * speed,
@@ -118,6 +141,27 @@ Page({
         
         for (let i = 0; i < bubbles.length; i++) {
           const bubble = bubbles[i]
+
+        // 处理戳破时的缩小消失动画
+        if (bubble.popping) {
+          bubble.popStep = (bubble.popStep || 0) + 1
+          
+          if (bubble.popStep <= 4) {
+            bubble.radius *= 1.15 // 短暂放大膨胀
+            bubble.x += (Math.random() - 0.5) * 6 // 震动
+            bubble.y += (Math.random() - 0.5) * 6
+          } else {
+            bubble.radius *= 0.7 // 快速缩小
+          }
+          
+          if (bubble.radius < 2) {
+            bubble.popping = false
+            bubble.popped = true // 标记为已戳破，触发隐藏
+          }
+          needUpdate = true
+          continue
+        }
+
           if (bubble.popped) continue
           
           // 更新位置
@@ -137,7 +181,7 @@ Page({
           // 泡泡之间碰撞检测（minDistance = 两个泡泡的动态radius之和，兼容不同大小泡泡）
           for (let j = i + 1; j < bubbles.length; j++) {
             const other = bubbles[j]
-            if (other.popped) continue
+            if (other.popped || other.popping) continue
             
             const dx = other.x - bubble.x
             const dy = other.y - bubble.y
@@ -234,14 +278,14 @@ Page({
         return
       }
       
-      if (bubble.popped) {
+      if (bubble.popped || bubble.popping) {
         return
       }
       
       this.showPopEffect(bubble.x, bubble.y)
       
       bubbles[id].selected = true
-      bubbles[id].popped = true
+      bubbles[id].popping = true // 开始动画，延迟设置为 popped
       bubbles[id].vx = 0
       bubbles[id].vy = 0
       
