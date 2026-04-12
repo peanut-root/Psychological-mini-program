@@ -13,8 +13,8 @@ Page({
     containerBounds: {
       left: 60,
       right: 690,
-      top: 350,
-      bottom: 1200
+      top: 250, // Adjusted to start below the title area
+      bottom: 1500 // Increased to cover more screen height
     },
   
     // 文字基础配置（可自定义调整）
