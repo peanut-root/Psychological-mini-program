@@ -2,6 +2,7 @@
 node_modules/
 dist/
 build/
+.venv/
 *.log
 
 # Environment
@@ -23,3 +24,9 @@ Thumbs.db
 # WeChat Developer Tools
 .tea/
 .omx/
+
+# Non-runtime review materials
+*.pdf
+*.docx
+Screenshot*.png
+images/Screenshot*.png

@@ -1477,7 +1477,7 @@ DSM-5 诊断标准
     if (storedCommentLikes && typeof storedCommentLikes === 'object') {
       comments = comments.map((c) => {
         const likeNum = storedCommentLikes[String(c.id)];
-        if (typeof likeNum === 'number') return { ...c, likes: likeNum };
+        if (typeof likeNum === 'number') return Object.assign({}, c, { likes: likeNum });
         return c;
       });
     }
@@ -1490,7 +1490,7 @@ DSM-5 诊断标准
   },
 
   onLike() {
-    const article = {...this.data.article};
+    const article = Object.assign({}, this.data.article);
     const liked = !article.liked;
     let likes = article.likes;
     if (liked) {
@@ -1567,8 +1567,8 @@ DSM-5 诊断标准
       likes: 0
     };
 
-    const article = {...this.data.article};
-    const comments = [newComment, ...article.comments];
+    const article = Object.assign({}, this.data.article);
+    const comments = [newComment].concat(article.comments || []);
     article.comments = comments;
     
     this.setData({
@@ -1590,8 +1590,8 @@ DSM-5 诊断标准
 
   onCommentLike(e) {
     const index = e.currentTarget.dataset.index;
-    const article = {...this.data.article};
-    const comments = [...article.comments];
+    const article = Object.assign({}, this.data.article);
+    const comments = (article.comments || []).slice();
     const target = comments[index];
     target.likes = (target.likes || 0) + 1;
     article.comments = comments;

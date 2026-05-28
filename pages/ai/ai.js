@@ -49,10 +49,10 @@ Page({
     if (!inputValue.trim()) return
 
     // 添加用户消息
-    const newMessages = [...messages, {
+    const newMessages = (messages || []).concat([{
       role: 'user',
       content: inputValue
-    }]
+    }])
     this.setData({
       messages: newMessages,
       inputValue: '',
@@ -66,10 +66,10 @@ Page({
     sendChatMessage(newMessages).then(reply => {
       console.log('AI reply received', reply)
       this.setData({
-        messages: [...newMessages, {
+        messages: newMessages.concat([{
           role: 'assistant',
           content: reply
-        }],
+        }]),
         isLoading: false,
         debugText: 'AI 已返回回复'
       })
@@ -86,4 +86,3 @@ Page({
     })
   }
 })
-

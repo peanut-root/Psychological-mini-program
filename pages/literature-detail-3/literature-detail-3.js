@@ -146,7 +146,7 @@ Page({
       likes: 0
     };
 
-    const comments = [newComment, ...this.data.article.comments];
+    const comments = [newComment].concat(this.data.article.comments || []);
     
     this.setData({
       'article.comments': comments,
@@ -162,7 +162,7 @@ Page({
 
   onCommentLike(e) {
     const index = e.currentTarget.dataset.index;
-    const comments = [...this.data.article.comments];
+    const comments = (this.data.article.comments || []).slice();
     comments[index].likes += 1;
 
     this.setData({
@@ -174,4 +174,3 @@ Page({
     wx.navigateBack();
   }
 })
-

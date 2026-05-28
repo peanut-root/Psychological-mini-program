@@ -1,4 +1,7 @@
 {
   "navigationBarTitleText": "就诊指南",
-  "backgroundColor": "#F5F5F5"
+  "backgroundColor": "#F5F5F5",
+  "usingComponents": {
+    "floating-ball": "../../components/floating-ball/floating-ball"
+  }
 }

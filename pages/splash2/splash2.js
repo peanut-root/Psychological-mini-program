@@ -111,6 +111,7 @@ Page({
           id: i,
           // 【关键4】替换number为text，存储自定义文字
           text: displayText, // Store wrapped text
+        number: displayText, // 兼容 WXML 中原有的 {{item.number}} 绑定
           originalText: currentText, // Keep original for reference if needed
           x: x,
           y: y,
@@ -290,7 +291,7 @@ Page({
       bubbles[id].vy = 0
       
       // 【修改】将bubble.number改为bubble.text，收集选择的文字
-      const selectedNumbers = [...this.data.selectedNumbers, bubble.text]
+      const selectedNumbers = (this.data.selectedNumbers || []).concat([bubble.text])
       const selectedCount = this.data.selectedCount + 1
       
       this.setData({

@@ -39,6 +39,7 @@
     "backgroundColor": "#F5F5F5"
   },
   "style": "v2",
+  "lazyCodeLoading": "requiredComponents",
   "permission": {
     "scope.userLocation": {
       "desc": "您的位置信息将用于为您展示医院的准确方位"

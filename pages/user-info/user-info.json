@@ -1,5 +1,6 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "floating-ball": "../../components/floating-ball/floating-ball"
+  },
   "navigationBarTitleText": "个人信息"
 }
-

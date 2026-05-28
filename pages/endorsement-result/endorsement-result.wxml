@@ -45,3 +45,5 @@
     </view>
   </block>
 </view>
+
+<floating-ball />

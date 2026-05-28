@@ -69,3 +69,5 @@
     </button>
   </view>
 </view>
+
+<floating-ball />
