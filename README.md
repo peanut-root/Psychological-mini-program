@@ -1,65 +1,118 @@
 # 心屿心理科普小程序
 
-基于微信原生小程序开发的「心屿」心理健康科普应用，界面与内容由早期 HTML/Tailwind 原型迁移而来；**当前唯一运行载体为小程序**（仓库内已无遗留 `.html` 页面）。
+「心屿」是一个微信原生小程序，用于心理健康科普、初步自助记录、文献阅读、就诊准备与医院推荐。项目已从早期 HTML/Tailwind 原型迁移为小程序形态，当前运行载体仅为微信小程序。
 
 ## 技术说明
 
-- 无 `package.json`、无 npm 构建链，使用**微信开发者工具**打开项目即可编译预览。
-- 全局入口：`app.js`、`app.json`、`app.wxss`。
-- 尺寸单位统一使用 `rpx`；主题色见 `styles/theme.wxss`。
+- 无 `package.json`、无 npm 构建链，使用微信开发者工具导入项目即可编译预览。
+- 全局入口为 `app.js`、`app.json`、`app.wxss`。
+- 页面开发使用 `.wxml`、`.wxss`、`.js`、`.json` 四件套。
+- 尺寸单位统一使用 `rpx`。
+- 主题与背景相关样式见 `styles/theme.wxss`。
+- 已开启组件懒加载：`app.json` 中配置 `"lazyCodeLoading": "requiredComponents"`。
 
-## 启动与预览
+## 预览方式
 
-1. 安装 [微信开发者工具](https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html)。
-2. 导入本项目目录，可使用测试号 AppID。
-3. 保存代码后 IDE 会自动编译；可用「预览」扫码在真机查看。
+1. 打开微信开发者工具。
+2. 导入本目录，也就是包含 `app.json` 的项目根目录。
+3. 使用正式 AppID 或测试号 AppID。
+4. 点击「编译」或保存文件触发自动编译。
+5. 若体检结果仍显示旧状态，先「清缓存并编译」，再点击 Code Quality 的「Rescan」。
 
-更详细的步骤见根目录 `预览说明.md`。
+更详细的预览步骤见 `预览说明.md`。
 
-## 导航与主要流程
+## 主要页面与流程
 
-- **引导**：`pages/splash` → `pages/splash2`（首次启动；本地 `hasOnboarded` 控制是否跳过）。
-- **主页**：`pages/home`（根据引导选择的关注领域个性化展示）。
-- **底部 Tab 相关**：科普、量表、互动、我的等页面以 `app.json` 中注册顺序为准。
-
-## 文献资料库（白皮书体例正文）
-
-列表页：`pages/literature/literature`  
-详情页：`pages/literature-detail/literature-detail`（通过 `?id=` 区分文章）
-
-文献列表共 **11** 篇，支持顶部分类筛选（全部、抑郁症、焦虑症、双相情感障碍、强迫症、创伤应激、精神分裂症、注意缺陷多动障碍、物质滥用、恐惧症、**躯体化障碍**、**性欲倒错**）。
-
-| id | 标题（列表展示） | 说明 |
-|----|------------------|------|
-| 1 | 抑郁症 | 病名、俗称、症状、DSM-5、治疗、误解澄清、病例等 |
-| 2 | 焦虑症 | 同上结构（广泛性焦虑等） |
-| 3 | 双相情感障碍 | DSM-5 分型与治疗 |
-| 4 | 强迫症 | DSM-5、ERP/药物等 |
-| 5 | 创伤后应激障碍 | PTSD 症状与诊断要点 |
-| 6 | 精神分裂症 | ICD-11 要点 |
-| 7 | 注意缺陷多动障碍 | DSM-5 |
-| 8 | 物质使用障碍 | ICD-11 核心症状与分级 |
-| 9 | 特定恐惧症 | 含「小众疾病分享」延伸阅读 |
-| 10 | 躯体化障碍 | DSM-5 躯体症状障碍 |
-| 11 | 性欲倒错 | 诊断与治疗原则（科普向） |
-
-详情页内**点赞数、评论列表**使用本地存储键 `literature:article:{id}:*` 持久化，进入页面会刷新显示。
-
-另保留独立模板页（若从其它入口跳转）：`pages/literature-detail-1`～`literature-detail-3`，与列表主路径可能不同，日常以 `literature-detail?id=` 为准。
-
-## 其他功能模块（节选）
-
-- 疾病专题页：`pages/depression`、`anxiety`、`bipolar`、`ocd`、`somatic`、`adhd` 等。
-- 工具与互动：`pages/ai`、`game`、`treehole`、`diary`、`weather`、`search`、`rescue` 等。
-- 医院与背书：`pages/hospital`、`endorsement`、`endorsement-result`。
+- 首次引导：`pages/splash/splash` → `pages/splash2/splash2`
+- 首页：`pages/home/home`
+- 搜索：`pages/search/search`
+- 科普主页：`pages/science/science`
+- 疾病专题：`pages/depression`、`pages/anxiety`、`pages/bipolar`、`pages/ocd`、`pages/somatic`、`pages/adhd`
+- 文献资料库：`pages/literature/literature`
+- 文献详情：`pages/literature-detail/literature-detail?id=1..11`
+- 就诊指南入口：`pages/guide/guide`
+- 就诊流程文字页：`pages/visit-process/visit-process`
+- 医院推荐：`pages/hospital/hospital`
+- 诊前背书：`pages/endorsement/endorsement`
+- 我的就诊背书：`pages/endorsement-result/endorsement-result`
+- AI 助手：`pages/ai/ai` 与 `components/floating-ball/floating-ball`
+- 其他工具：`pages/rescue`、`pages/scale`、`pages/game`、`pages/treehole`、`pages/diary`、`pages/weather`
 
 完整页面清单以 `app.json` 的 `pages` 数组为准。
 
-## 资源与约束
+## 就诊指南模块
 
-- 图片与图标放在 `images/`。
-- UI 与注释保持**简体中文**。
+`pages/guide/guide` 保留三个入口卡片：
 
-## 仓库维护说明
+- 医院推荐：跳转到 `pages/hospital/hospital`
+- 就诊背书：跳转到 `pages/endorsement/endorsement`
+- 就诊流程介绍：跳转到 `pages/visit-process/visit-process`
 
-历史上曾保留与小程序页面同名的根目录 `.html` 作为旧版预览，已与小程序重复且易混淆，**已全部删除**。后续修改请以 `pages/` 下 `.wxml` / `.wxss` / `.js` / `.json` 为准。
+`pages/visit-process/visit-process` 是白底文字页，包含：
+
+- 就诊流程步骤
+- 就诊前准备清单
+- 可以如何向医生表达
+- 看诊后注意事项
+- 紧急情况提醒
+
+页面文本使用少量 emoji 做提示，但主要内容仍以文字说明为主。
+
+## 医院推荐模块
+
+`pages/hospital/hospital` 展示各地区推荐机构，包含综合性医院与专科医院两类。顶部「推荐机构」区域已调整为全宽卡片样式，并保留地区选择器。
+
+位置跳转使用 `wx.openLocation`，医院数据维护在 `pages/hospital/hospital.js` 的 `hospitalData` 中。
+
+## 文献资料库
+
+列表页：`pages/literature/literature`
+
+通用详情页：`pages/literature-detail/literature-detail`
+
+文献共 11 篇，覆盖：
+
+| id | 主题 |
+| --- | --- |
+| 1 | 抑郁症 |
+| 2 | 焦虑症 |
+| 3 | 双相情感障碍 |
+| 4 | 强迫症 |
+| 5 | 创伤后应激障碍 |
+| 6 | 精神分裂症 |
+| 7 | 注意缺陷多动障碍 |
+| 8 | 物质使用障碍 |
+| 9 | 特定恐惧症 |
+| 10 | 躯体化障碍 |
+| 11 | 性欲倒错 |
+
+点赞、评论与评论点赞使用本地存储，键名形如 `literature:article:{id}:*`。
+
+## 资源与审核体检
+
+为通过微信开发者工具 Code Quality 检查，当前项目做了以下处理：
+
+- 主包估算约 `0.60MB`，低于 `1.5MB`。
+- 项目内运行图片均低于 `200KB`。
+- `images/bg-main.jpg` 为压缩后的背景图。
+- `images/floating-ball-icon.png` 为压缩后的悬浮球图标。
+- `project.config.json` 已开启代码压缩、WXML/WXSS 压缩、未使用文件忽略。
+- `.gitignore` 已忽略 `.venv/`、PDF、docx、截图等非运行资源。
+
+审核外资料已移到项目目录外的备份目录：
+
+`/Users/peanut/Documents/PH IEP/11 上/心理小程序审核外备份-20260528-200045`
+
+## 重要约束
+
+- 不要把大图、PDF、Word 文档、截图或虚拟环境放回小程序项目根目录。
+- 图片资源统一放在 `images/`，并保持单个图片小于 `200KB`。
+- 页面文字与注释保持简体中文。
+- 新增页面后必须在 `app.json` 注册路径。
+- 新增主内容页时优先复用 `styles/theme.wxss` 与现有页面结构。
+
+## 当前维护状态
+
+- 旧版根目录 HTML 原型已不再作为运行入口。
+- 日常修改以 `pages/`、`components/`、`utils/`、`styles/`、`images/` 为主。
+- 如模拟器显示旧内容，优先在微信开发者工具中执行「清缓存并编译」。
