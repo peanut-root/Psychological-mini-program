@@ -29,9 +29,8 @@ Page({
 
   // 跳转到就诊流程介绍
   navigateToProcess() {
-    wx.showToast({
-      title: '就诊流程介绍功能开发中',
-      icon: 'none'
+    wx.navigateTo({
+      url: '/pages/visit-process/visit-process'
     })
   }
 })

@@ -1,0 +1,95 @@
+/* pages/visit-process/visit-process.wxss */
+.page {
+  min-height: 100vh;
+  background: #FFFFFF;
+}
+
+.content {
+  height: 100vh;
+  box-sizing: border-box;
+  padding: 36rpx 32rpx 80rpx;
+}
+
+.intro {
+  padding: 16rpx 0 28rpx;
+}
+
+.page-title {
+  display: block;
+  font-size: 46rpx;
+  line-height: 1.25;
+  font-weight: 700;
+  color: #222222;
+  margin-bottom: 18rpx;
+}
+
+.page-desc {
+  display: block;
+  font-size: 28rpx;
+  line-height: 1.7;
+  color: #666666;
+}
+
+.section,
+.emergency {
+  padding: 30rpx 0;
+  border-top: 2rpx solid #F0F0F0;
+}
+
+.section-title,
+.emergency-title {
+  display: block;
+  font-size: 32rpx;
+  line-height: 1.35;
+  font-weight: 700;
+  color: #303133;
+  margin-bottom: 20rpx;
+}
+
+.step-card {
+  padding: 24rpx 0;
+  border-bottom: 2rpx solid #F5F5F5;
+}
+
+.step-card:last-child {
+  border-bottom: none;
+}
+
+.step-title {
+  display: block;
+  font-size: 29rpx;
+  line-height: 1.45;
+  font-weight: 700;
+  color: #333333;
+  margin-bottom: 10rpx;
+}
+
+.step-desc,
+.list-item,
+.emergency-desc {
+  display: block;
+  font-size: 27rpx;
+  line-height: 1.75;
+  color: #555555;
+}
+
+.list-item {
+  padding: 14rpx 0;
+  border-bottom: 2rpx solid #F7F7F7;
+}
+
+.list-item:last-child {
+  border-bottom: none;
+}
+
+.emergency {
+  margin-bottom: 40rpx;
+}
+
+.emergency-title {
+  color: #A33A2B;
+}
+
+.emergency-desc {
+  color: #7A2E24;
+}

@@ -1,6 +1,9 @@
 .container {
+  min-height: 100vh;
   background-color: transparent;
   position: relative;
+  padding: 48rpx 24rpx 80rpx;
+  box-sizing: border-box;
 }
 
 .bg-image {
@@ -13,6 +16,7 @@
 }
 
 .header {
+  width: 100%;
   padding: 40rpx 32rpx;
   display: flex;
   flex-direction: column;
@@ -20,13 +24,15 @@
   justify-content: flex-start;
   box-sizing: border-box;
   background-color: #FFFFFF;
+  border-radius: 28rpx;
+  box-shadow: 0 8rpx 24rpx rgba(77, 83, 99, 0.08);
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 60rpx;
+  margin-bottom: 32rpx;
   position: relative;
 }
 

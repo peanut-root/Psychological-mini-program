@@ -1,0 +1,37 @@
+<!--pages/visit-process/visit-process.wxml-->
+<view class="page">
+  <scroll-view class="content" scroll-y>
+    <view class="intro">
+      <text class="page-title">🔄 就诊流程介绍</text>
+      <text class="page-desc">🧭 从挂号到诊断的完整流程，用文字一步步看清楚，去医院前可以先照着准备。🌿</text>
+    </view>
+
+    <view class="section">
+      <text class="section-title">🗺️ 流程步骤</text>
+      <view class="step-card" wx:for="{{processSteps}}" wx:key="title">
+        <text class="step-title">{{item.title}}</text>
+        <text class="step-desc">{{item.desc}}</text>
+      </view>
+    </view>
+
+    <view class="section">
+      <text class="section-title">🎒 就诊前准备清单</text>
+      <text class="list-item" wx:for="{{prepItems}}" wx:key="*this">{{item}}</text>
+    </view>
+
+    <view class="section">
+      <text class="section-title">💬 可以这样和医生说</text>
+      <text class="list-item" wx:for="{{talkTips}}" wx:key="*this">{{item}}</text>
+    </view>
+
+    <view class="section">
+      <text class="section-title">🌱 看诊后记得做</text>
+      <text class="list-item" wx:for="{{afterCareItems}}" wx:key="*this">{{item}}</text>
+    </view>
+
+    <view class="emergency">
+      <text class="emergency-title">🚨 紧急情况提醒</text>
+      <text class="emergency-desc">🆘 如果出现强烈自伤、自杀或伤害他人的冲动，请立即联系身边可信任的人、拨打 120，或前往最近医院急诊。</text>
+    </view>
+  </scroll-view>
+</view>
