@@ -9,6 +9,7 @@
     "skylineRenderEnable": false,
     "preloadBackgroundData": false,
     "autoAudits": false,
+    "ignoreUploadUnusedFiles": true,
     "useApiHook": true,
     "useApiHostProcess": true,
     "showShadowRootInWxmlPanel": true,

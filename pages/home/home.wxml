@@ -1,6 +1,6 @@
 <!--pages/home/home.wxml-->
-<!-- 放置我们新的全局背景图片 -->
-<image class="global-bg" src="/6ba2d4d3171c6cdc8ae1cab8114411ea.jpg" mode="aspectFill"></image>
+<!-- 放置全局背景图片 -->
+<image class="global-bg" src="/images/bg-main.jpg" mode="aspectFill"></image>
 
 <view class="container bg-app-yellow page-fill">
   

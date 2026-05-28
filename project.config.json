@@ -1,7 +1,80 @@
 {
     "description": "心屿心理科普小程序",
     "packOptions": {
-        "ignore": [],
+        "ignore": [
+            {
+                "type": "folder",
+                "value": ".git"
+            },
+            {
+                "type": "folder",
+                "value": ".venv"
+            },
+            {
+                "type": "folder",
+                "value": ".omx"
+            },
+            {
+                "type": "folder",
+                "value": "specs"
+            },
+            {
+                "type": "folder",
+                "value": "pages/home_backup"
+            },
+            {
+                "type": "file",
+                "value": "6ba2d4d3171c6cdc8ae1cab8114411ea.jpg"
+            },
+            {
+                "type": "file",
+                "value": "白皮书.pdf"
+            },
+            {
+                "type": "file",
+                "value": "白皮书 copy.pdf"
+            },
+            {
+                "type": "file",
+                "value": "就诊背书.docx"
+            },
+            {
+                "type": "file",
+                "value": "医院分布.docx"
+            },
+            {
+                "type": "file",
+                "value": "Screenshot 2026-01-23 at 8.36.23 PM.png"
+            },
+            {
+                "type": "file",
+                "value": "Screenshot 2026-04-07 at 10.59.16 AM.png"
+            },
+            {
+                "type": "file",
+                "value": "images/Screenshot 2026-04-07 at 9.06.57 AM.png"
+            },
+            {
+                "type": "file",
+                "value": "README.md"
+            },
+            {
+                "type": "file",
+                "value": "QODER.md"
+            },
+            {
+                "type": "file",
+                "value": "AGENTS.md"
+            },
+            {
+                "type": "file",
+                "value": "预览说明.md"
+            },
+            {
+                "type": "file",
+                "value": "FETCH_HEAD"
+            }
+        ],
         "include": []
     },
     "setting": {
@@ -11,6 +84,8 @@
         "postcss": true,
         "preloadBackgroundData": false,
         "minified": true,
+        "ignoreUploadUnusedFiles": true,
+        "ignoreDevUnusedFiles": true,
         "newFeature": false,
         "coverView": true,
         "nodeModules": false,
@@ -20,7 +95,7 @@
         "uglifyFileName": false,
         "checkInvalidKey": true,
         "checkSiteMap": true,
-        "uploadWithSourceMap": true,
+        "uploadWithSourceMap": false,
         "compileHotReLoad": false,
         "lazyloadPlaceholderEnable": false,
         "useMultiFrameRuntime": true,

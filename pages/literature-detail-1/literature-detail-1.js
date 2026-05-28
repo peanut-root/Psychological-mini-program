@@ -186,7 +186,7 @@ C. 排除标准
     if (storedCommentLikes && typeof storedCommentLikes === 'object') {
       comments = comments.map((c) => {
         const likeNum = storedCommentLikes[String(c.id)];
-        if (typeof likeNum === 'number') return { ...c, likes: likeNum };
+        if (typeof likeNum === 'number') return Object.assign({}, c, { likes: likeNum });
         return c;
       });
     }
@@ -271,7 +271,7 @@ C. 排除标准
       likes: 0
     };
 
-    const comments = [newComment, ...this.data.article.comments];
+    const comments = [newComment].concat(this.data.article.comments || []);
     
     this.setData({
       'article.comments': comments,
@@ -290,7 +290,7 @@ C. 排除标准
 
   onCommentLike(e) {
     const index = e.currentTarget.dataset.index;
-    const comments = [...this.data.article.comments];
+    const comments = (this.data.article.comments || []).slice();
     const target = comments[index];
     target.likes = (target.likes || 0) + 1;
 
@@ -308,4 +308,3 @@ C. 排除标准
     wx.navigateBack();
   }
 })
-

@@ -1,3 +1,6 @@
 {
-  "navigationBarTitleText": "文献详情"
+  "navigationBarTitleText": "文献详情",
+  "usingComponents": {
+    "floating-ball": "../../components/floating-ball/floating-ball"
+  }
 }

@@ -11,6 +11,7 @@
   wx:if="{{!panelOpen}}"
 >
   <image class="ball-icon" src="/images/floating-ball-icon.png" mode="aspectFit"></image>
+  <text class="ball-label">AI</text>
 </view>
 
 <!-- Chat Panel Overlay -->

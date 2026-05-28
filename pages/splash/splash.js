@@ -1,4 +1,11 @@
 // pages/splash/splash.js
+
+const COLOR_PALETTE = [
+  '#FF6B9D', '#4ECDC4', '#95E1D3', '#F38181', '#AA96DA',
+  '#FCBAD3', '#FFD3A5', '#A8E6CF', '#FFD89B', '#C7CEEA',
+  '#FFB6C1', '#87CEEB', '#98D8C8', '#F7DC6F', '#BB8FCE'
+];
+
 Page({
   data: {
     bubbles: [],
@@ -9,12 +16,36 @@ Page({
     popEffectY: 0
   },
 
+  // 文字基础配置（可自定义调整）
+  textConfig: {
+    fontSize: 28, // 【改回与 WXSS 一致的文字大小】决定泡泡背景尺寸
+    padding: 20, // 文字与泡泡边缘的内边距（rpx），避免文字紧贴泡泡
+    singleCharWidth: 30, // 单个汉字的估算宽度（rpx），一般比 fontSize 略大一点点
+    maxCharsPerLine: 4 // 新增：每行最大字符数，用于文字换行
+  },
+
   // 容器边界
   containerBounds: {
     left: 60,
     right: 690,
     top: 250, // Adjusted to start below the title area
     bottom: 1500 // Increased to cover more screen height
+  },
+
+  // 新增：将 HEX 颜色转换为带透明度的 RGBA 格式
+  hexToRgba(hex, opacity) {
+    let c;
+    if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
+      c = hex.substring(1).split('');
+      if (c.length === 3) {
+        c = [c[0], c[0], c[1], c[1], c[2], c[2]];
+      }
+      c = '0x' + c.join('');
+      return `rgba(${[(c >> 16) & 255, (c >> 8) & 255, c & 255].join(',')},${opacity})`;
+    }
+    // 如果已经是 rgba 格式，直接返回
+    if (hex && hex.toLowerCase().startsWith('rgba')) return hex;
+    return `rgba(128,128,128,${opacity})`; // 对于无效格式，返回灰色
   },
 
   onLoad() {
@@ -29,29 +60,96 @@ Page({
     }
   },
 
-  // 初始化10个数字泡泡，网格分布 to prevent overlap
+  // 初始化10个文字泡泡，随机分布，大小跟随文字
   initBubbles() {
-    const colors = [
-      '#FF6B9D', '#4ECDC4', '#95E1D3', '#F38181', '#AA96DA',
-      '#FCBAD3', '#FFD3A5', '#A8E6CF', '#FFD89B', '#C7CEEA'
-    ]
-    
+    // 【修改】将颜色转换为半透明
+    const colors = COLOR_PALETTE.map(hex => this.hexToRgba(hex, 0.85));
+    // 【关键1】定义所有可能的形容词
+    const allAdjectives = [
+      '抑郁的', '绝望的', '无助的', '内疚的', '无价值感的', '淡漠的', '麻木的',
+      '欣快的', '易激惹的', '激越的', '情绪不稳的', '焦虑的', '易受伤害的',
+      '恐惧的', '疏离的'
+    ];
+
+    // 形容词到疾病的映射
+    this.adjectiveToDiseaseMap = {
+      '抑郁的': '抑郁症',
+      '绝望的': '抑郁症',
+      '无助的': '抑郁症',
+      '内疚的': '抑郁症',
+      '无价值感的': '抑郁症',
+      '淡漠的': '精神分裂症',
+      '麻木的': '创伤后应激障碍',
+      '欣快的': '双相情感障碍',
+      '易激惹的': '双相情感障碍',
+      '激越的': '双相情感障碍',
+      '情绪不稳的': '边缘型人格障碍',
+      '焦虑的': '焦虑症',
+      '易受伤害的': '边缘型人格障碍',
+      '恐惧的': '特定恐惧症',
+      '疏离的': '分裂型人格障碍'
+    };
+
+    // 打乱所有形容词数组
+    for (let i = allAdjectives.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const temp = allAdjectives[i];
+      allAdjectives[i] = allAdjectives[j];
+      allAdjectives[j] = temp;
+    }
+    // 选取前10个作为泡泡内容
+    const customAdjectives = allAdjectives.slice(0, 10);
+
     const bubbles = []
-    const bubbleRadius = 60 // 泡泡半径rpx
     const bounds = this.containerBounds
+     const { fontSize, padding, singleCharWidth, maxCharsPerLine } = this.textConfig // Get maxCharsPerLine
     
-    // Calculate grid dimensions to fit 10 bubbles
+    // 生成10个泡泡，网格分布 to prevent overlap，大小跟随文字
     const cols = 4;
-    const rows = 3; // ceil(10/4) = 3
+
+   const rows = Math.ceil(customAdjectives.length / cols);
     
-    // Generate 10 bubbles with grid-based initial positions
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < customAdjectives.length; i++) {
+      const currentText = customAdjectives[i]
+
+      // --- Start: Text Wrapping Logic ---
+      let wrappedLines = [];
+      let longestLineLength = 0;
+      if (currentText.length > maxCharsPerLine) {
+          let tempText = currentText;
+          while (tempText.length > 0) {
+              const line = tempText.substring(0, maxCharsPerLine);
+              wrappedLines.push(line);
+              if (line.length > longestLineLength) {
+                  longestLineLength = line.length;
+              }
+              tempText = tempText.substring(maxCharsPerLine);
+          }
+      } else {
+          wrappedLines.push(currentText);
+          longestLineLength = currentText.length;
+      }
+      const displayText = wrappedLines.join('\n'); // Join with newline for display
+      const numLines = wrappedLines.length;
+      // --- End: Text Wrapping Logic ---
+      
+      // 【关键2】计算文字所需宽高，动态生成泡泡半径
+      // 1. 计算文字宽度：最长行字符数 * 单个字符宽度
+      const textWidth = longestLineLength * singleCharWidth
+      // 2. 计算文字高度：行数 * 字体大小
+      const textHeight = numLines * fontSize
+      // 3. 计算泡泡最小半径：取文字宽高的最大值 + 内边距，再取一半（圆形泡泡需容纳全部文字）
+      const bubbleRadius = Math.max(textWidth, textHeight) / 2 + padding
+      
+      // 【关键3】Grid-based positioning，确保泡泡完整在容器内（使用动态计算的radius，不再是固定值）
       const col = i % cols;
       const row = Math.floor(i / cols);
       
       // Calculate grid cell dimensions
-      const cellWidth = (bounds.right - bounds.left) / cols;
-      const cellHeight = (bounds.bottom - bounds.top) / rows;
+      
+      // Calculate grid cell dimensions
+      const cellWidth = (bounds.right - bounds.left) / (cols + 0.5); // Add margin
+      const cellHeight = (bounds.bottom - bounds.top) / (rows + 0.5); // Add margin
       
       // Position in the center of each grid cell
       const x = bounds.left + col * cellWidth + cellWidth / 2;
@@ -63,14 +161,17 @@ Page({
       
       bubbles.push({
         id: i,
-        number: i + 1,
+        // 【关键4】替换number为text，存储自定义文字
+        text: displayText, // Store wrapped text
+        number: displayText, // 兼容 WXML 中原有的 {{item.number}} 绑定
+        originalText: currentText, // Keep original for reference if needed
         x: x,
         y: y,
         vx: Math.cos(angle) * speed, // 速度向量X
         vy: Math.sin(angle) * speed, // 速度向量Y
-        radius: bubbleRadius,
-        color: colors[i],
-        originalColor: colors[i], // 保存原始颜色
+        radius: bubbleRadius, // 【关键5】存入动态计算的泡泡半径，适配物理引擎
+        color: colors[i % colors.length], // Use modulo to cycle through colors if customAdjectives > colors.length
+        originalColor: colors[i % colors.length], // 保存原始颜色
         popped: false,
         selected: false,
         lastCollisionTime: 0 // 防止连续碰撞
@@ -198,19 +299,15 @@ Page({
 
   // 碰撞后变色 - 使用随机颜色，但避免过浅的颜色
   changeColorOnCollision(bubble) {
-    const colorPalette = [
-      '#FF6B9D', '#4ECDC4', '#95E1D3', '#F38181', '#AA96DA',
-      '#FCBAD3', '#FFD3A5', '#A8E6CF', '#FFD89B', '#C7CEEA',
-      '#FFB6C1', '#87CEEB', '#98D8C8', '#F7DC6F', '#BB8FCE'
-    ];
+    const semiTransparentPalette = COLOR_PALETTE.map(hex => this.hexToRgba(hex, 0.85)); // 【修改】预先转换为半透明
     
     let newColor;
     let attempts = 0;
     const maxAttempts = 50; // 防止无限循环
     
-    // 循环查找不是当前颜色且不太浅的颜色
+    // 循环查找不是当前颜色的颜色
     do {
-      newColor = colorPalette[Math.floor(Math.random() * colorPalette.length)];
+      newColor = semiTransparentPalette[Math.floor(Math.random() * semiTransparentPalette.length)];
       attempts++;
       
       // 如果尝试次数过多，就接受当前颜色以避免卡住
@@ -253,8 +350,13 @@ Page({
     bubbles[id].vx = 0
     bubbles[id].vy = 0
     
-    const selectedNumbers = [...this.data.selectedNumbers, bubble.number]
-    const selectedCount = this.data.selectedCount + 1
+    // 【修改】将bubble.number改为bubble.originalText，收集选择的疾病名称（而非形容词）
+    const diseaseName = this.adjectiveToDiseaseMap[bubble.originalText];
+    const selectedNumbers = (this.data.selectedNumbers || []).slice();
+    if (selectedNumbers.indexOf(diseaseName) === -1) {
+      selectedNumbers.push(diseaseName);
+    }
+    const selectedCount = selectedNumbers.length; // Count unique diseases
     
     this.setData({
       bubbles: bubbles,
@@ -293,7 +395,7 @@ Page({
   // 第一个泡泡页完成时的处理
   handleFirstStepComplete() {
     wx.removeStorageSync('bubbleSkippedStep1')
-    // 保存选择的数字到本地存储，区分第一步
+    // 保存选择的疾病名称到本地存储，区分第一步
     wx.setStorageSync('selectedNumbersStep1', this.data.selectedNumbers)
 
     wx.showToast({

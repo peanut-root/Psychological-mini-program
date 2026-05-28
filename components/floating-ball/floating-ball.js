@@ -288,7 +288,7 @@ Component({
         inputText: ''
       })
 
-      const msgs = [...this.data.messages, userMsg]
+      const msgs = (this.data.messages || []).concat([userMsg])
       this.setData({ messages: msgs })
       this._saveChatHistory()
 
@@ -300,7 +300,7 @@ Component({
         timestamp: Date.now(),
         status: 'pending'
       }
-      const withLoading = [...this.data.messages, loadingMsg]
+      const withLoading = (this.data.messages || []).concat([loadingMsg])
       this.setData({ messages: withLoading })
       this._scrollToBottom()
 
@@ -326,7 +326,7 @@ Component({
             timestamp: Date.now(),
             status: 'sent'
           }
-          const finalMsgs = [...allMsgs, assistantMsg]
+          const finalMsgs = allMsgs.concat([assistantMsg])
           this.setData({ messages: finalMsgs })
           this._saveChatHistory()
           this._scrollToBottom()
@@ -341,7 +341,7 @@ Component({
             timestamp: Date.now(),
             status: 'error'
           }
-          const finalMsgs = [...allMsgs, errorMsg]
+          const finalMsgs = allMsgs.concat([errorMsg])
           this.setData({ messages: finalMsgs })
           this._saveChatHistory()
           this._scrollToBottom()
