@@ -7,11 +7,11 @@
   bindtouchmove="onTouchMove"
   bindtouchend="onTouchEnd"
   bindtap="onBallTap"
-  aria-label="AI 心理助手"
+  aria-label="{{botName}}"
   wx:if="{{!panelOpen}}"
 >
   <image class="ball-icon" src="/images/floating-ball-icon.png" mode="aspectFit"></image>
-  <text class="ball-label">AI</text>
+  <text class="ball-label">科普</text>
 </view>
 
 <!-- Chat Panel Overlay -->
@@ -19,7 +19,7 @@
 <view class="panel-container {{panelOpen ? 'panel-slide-in' : ''}}" style="width:{{panelWidth}}rpx; {{keyboardHeight > 0 ? 'bottom:' + keyboardHeight + 'px;' : ''}}" wx:if="{{panelOpen}}">
   <!-- Header -->
   <view class="panel-header">
-    <text class="panel-title">AI 心理助手</text>
+    <text class="panel-title">{{botName}}</text>
   </view>
 
   <!-- Message List -->

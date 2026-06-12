@@ -1,5 +1,5 @@
 // components/floating-ball/floating-ball.js
-const { sendChatMessage } = require('../../utils/ai-api')
+const { sendChatMessage, BOT_NAME } = require('../../utils/ai-api')
 
 Component({
   data: {
@@ -17,6 +17,7 @@ Component({
     messages: [],
     inputText: '',
     scrollToId: '',
+    botName: BOT_NAME,
 
     // Keyboard
     keyboardHeight: 0,
@@ -296,7 +297,7 @@ Component({
       const loadingMsg = {
         id: 'loading_' + Date.now(),
         role: 'assistant',
-        content: '思考中...',
+        content: '整理科普回复中...',
         timestamp: Date.now(),
         status: 'pending'
       }
@@ -305,15 +306,9 @@ Component({
       this._scrollToBottom()
 
       // Call API
-      const apiMessages = this.data.messages
+      const apiMessages = msgs
         .filter(m => m.role === 'user' || m.role === 'assistant')
         .map(m => ({ role: m.role, content: m.content }))
-
-      // Add system prompt
-      apiMessages.unshift({
-        role: 'system',
-        content: '你是一个支持性心理健康助手，不提供医疗诊断。请倾听、理解、共情，必要时建议用户寻求专业帮助。'
-      })
 
       sendChatMessage(apiMessages)
         .then(reply => {

@@ -16,20 +16,30 @@
   min-height: 100vh;
 }
 
-.avatar-placeholder {
+.avatar-picker {
   width: 180rpx;
   height: 180rpx;
   border-radius: 90rpx;
-  background-color: #F0F0F0;
+  background-color: #F0F0F0 !important;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 48rpx;
+  padding: 0;
+  overflow: hidden;
+  border: none;
 }
 
-.avatar-icon {
-  font-size: 90rpx;
-  color: #CCCCCC;
+.avatar-picker::after,
+.avatar-button::after,
+.avatar-small-button::after {
+  border: none;
+}
+
+.avatar-preview {
+  width: 180rpx;
+  height: 180rpx;
+  border-radius: 90rpx;
 }
 
 .welcome-text {
@@ -42,7 +52,20 @@
 .login-hint {
   font-size: 28rpx;
   color: #999999;
-  margin-bottom: 80rpx;
+  margin-bottom: 32rpx;
+}
+
+.nickname-input {
+  width: 80%;
+  height: 88rpx;
+  padding: 0 32rpx;
+  margin-bottom: 40rpx;
+  box-sizing: border-box;
+  border-radius: 44rpx;
+  background-color: #F8F9FA;
+  font-size: 30rpx;
+  color: #333333;
+  text-align: center;
 }
 
 .login-btn {
@@ -69,12 +92,24 @@
   margin-bottom: 20rpx;
 }
 
+.avatar-button {
+  width: 140rpx;
+  height: 140rpx;
+  padding: 0;
+  margin-right: 32rpx;
+  border-radius: 70rpx;
+  overflow: hidden;
+  background-color: transparent !important;
+  border: none;
+  flex-shrink: 0;
+}
+
 .avatar {
   width: 140rpx;
   height: 140rpx;
   border-radius: 70rpx;
-  margin-right: 32rpx;
   border: 4rpx solid #F5F5F5;
+  box-sizing: border-box;
 }
 
 .user-detail {
@@ -146,11 +181,21 @@
   margin-right: 12rpx;
 }
 
+.avatar-small-button {
+  width: 72rpx;
+  height: 72rpx;
+  padding: 0;
+  margin-right: 12rpx;
+  border-radius: 36rpx;
+  overflow: hidden;
+  background-color: transparent !important;
+  border: none;
+}
+
 .avatar-small {
   width: 72rpx;
   height: 72rpx;
   border-radius: 36rpx;
-  margin-right: 12rpx;
 }
 
 .arrow {

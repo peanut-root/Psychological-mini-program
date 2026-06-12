@@ -6,7 +6,7 @@
   <view class="main-content">
     <view class="interaction-list">
       <view class="interaction-item" bindtap="navigateToAI">
-        <text>AI 心理助手</text>
+        <text>心屿科普助手</text>
         <text>→</text>
       </view>
       <view class="interaction-item" bindtap="navigateToGame">

@@ -3,7 +3,7 @@
   <!-- 用户信息头部 - 通栏设计 -->
   <view class="user-section">
     <block wx:if="{{!hasUserInfo}}">
-      <view class="login-prompt" bindtap="getUserProfile">
+      <view class="login-prompt" bindtap="navigateToUserInfo">
         <view class="avatar-placeholder">?</view>
         <view class="login-text">
           <text class="user-name">点击登录微信</text>

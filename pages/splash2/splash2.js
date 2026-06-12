@@ -290,8 +290,8 @@ Page({
       bubbles[id].vx = 0
       bubbles[id].vy = 0
       
-      // 【修改】将bubble.number改为bubble.text，收集选择的文字
-      const selectedNumbers = (this.data.selectedNumbers || []).concat([bubble.text])
+      // 收集原始疾病名，避免首页拿到换行展示文本后匹配失败
+      const selectedNumbers = (this.data.selectedNumbers || []).concat([bubble.originalText || bubble.text])
       const selectedCount = this.data.selectedCount + 1
       
       this.setData({

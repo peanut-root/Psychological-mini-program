@@ -32,19 +32,24 @@ Page({
 
     // 从本地存储获取第二个泡泡页选择的疾病
     const selectedDiseases = wx.getStorageSync('selectedNumbers')
-    if (selectedDiseases && selectedDiseases.length === 3) {
+    if (selectedDiseases && selectedDiseases.length > 0) {
       // 将选择的疾病映射到关键词和疾病名称
       const scienceBlocks = selectedDiseases.map((disease, index) => {
+        const normalizedDisease = this.normalizeDiseaseName(disease)
         return {
           id: index + 1,
-          keyword: this.getDiseaseKeyword(disease),
-          disease: disease
+          keyword: this.getDiseaseKeyword(normalizedDisease),
+          disease: normalizedDisease
         }
       })
       this.setData({
         scienceBlocks: scienceBlocks
       })
     }
+  },
+
+  normalizeDiseaseName(disease) {
+    return String(disease || '').replace(/\s+/g, '')
   },
 
   // 根据疾病名称获取对应的关键词
@@ -64,7 +69,27 @@ Page({
       '边缘型人格障碍': '情绪失调',
       '分裂型人格障碍': '疏离感'
     }
-    return keywordMap[disease] || '关注'
+    return keywordMap[this.normalizeDiseaseName(disease)] || '科普'
+  },
+
+  getDiseaseArticleId(disease) {
+    const articleMap = {
+      '抑郁症': 1,
+      '焦虑症': 2,
+      '双相情感障碍': 3,
+      '强迫症': 4,
+      '创伤后应激障碍': 5,
+      '精神分裂症': 6,
+      '注意力缺陷与多动障碍': 7,
+      '注意缺陷多动障碍': 7,
+      '物质成瘾': 8,
+      '物质使用障碍': 8,
+      '特定恐惧症': 9,
+      '躯体化症状': 10,
+      '躯体化障碍': 10,
+      '性欲倒错': 11
+    }
+    return articleMap[this.normalizeDiseaseName(disease)] || 0
   },
 
   // 导航函数
@@ -86,12 +111,21 @@ Page({
     })
   },
 
-  navigateToScience() {
-    setTimeout(() => {
-      wx.switchTab({
-        url: '/pages/science/science'
+  navigateToScience(e) {
+    const disease = e && e.currentTarget ? e.currentTarget.dataset.disease : ''
+    const section = e && e.currentTarget ? e.currentTarget.dataset.section : ''
+    const articleId = this.getDiseaseArticleId(disease)
+
+    if (articleId) {
+      wx.navigateTo({
+        url: `/pages/literature-detail/literature-detail?id=${articleId}&section=${section || 'overview'}`
       })
-    }, 300)
+      return
+    }
+
+    wx.navigateTo({
+      url: '/pages/literature/literature'
+    })
   },
 
   navigateToLiterature() {
