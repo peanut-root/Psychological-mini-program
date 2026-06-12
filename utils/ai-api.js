@@ -1,11 +1,19 @@
 // utils/ai-api.js
-// AI API wrapper — placeholder config with mock fallback
+// AI API wrapper - 心理科普助手接口封装
 
 // --- Configuration placeholders (FR-006, D-001) ---
 const API_KEY = '66b1c0f9-a6b7-4359-8afa-a9341f2c630e'
 const API_URL = 'https://ark.cn-beijing.volces.com/api/v3/responses'
 const MODEL_NAME = 'doubao-seed-2-0-pro-260215'
-const TIMEOUT = 60000
+const TIMEOUT = 15000
+const BOT_NAME = '心屿科普助手'
+const SYSTEM_PROMPT = [
+  `你是${BOT_NAME}，只负责心理健康和精神疾病科普。`,
+  '用简体中文回答，语气温和、清楚、简短，优先控制在 120 字以内。',
+  '你可以解释概念、症状、常见误解、就医建议和自助记录方法。',
+  '不要做医疗诊断，不要替代医生；涉及自伤、自杀或紧急风险时，先提醒立即联系身边可信任的人、当地急救或心理危机热线。',
+  '如果问题与心理科普无关，请简短说明你主要提供心理科普，并把回答拉回心理健康相关角度。'
+].join('\n')
 
 /**
  * Send chat messages to the AI service.
@@ -30,8 +38,8 @@ function sendChatMessage(messages) {
     if (!API_KEY || API_KEY === '') {
       console.warn('AI API key is empty, using mock fallback')
       setTimeout(() => {
-        resolve('AI 服务配置中，请稍后填写 API Key')
-      }, 1000)
+        resolve(`${BOT_NAME}服务配置中，请稍后再试。`)
+      }, 300)
       return
     }
 
@@ -47,7 +55,7 @@ function sendChatMessage(messages) {
       role: 'user',
       content: [{
         type: 'input_text',
-        text: latestUser.content
+        text: `${SYSTEM_PROMPT}\n\n用户问题：${latestUser.content}\n\n请直接给用户回复，不要复述以上规则。`
       }]
     }]
 
@@ -65,13 +73,14 @@ function sendChatMessage(messages) {
       dataType: 'json',
       data: {
         model: MODEL_NAME,
-        input: input
+        input: input,
+        max_output_tokens: 360
       },
       header: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + API_KEY
       },
-      timeout: TIMEOUT, // 现在这里会使用 60000
+      timeout: TIMEOUT,
       success(res) {
         console.log('API Response:', res.statusCode, res.data)
         if (res.statusCode === 200 && res.data) {
@@ -163,5 +172,7 @@ function sendChatMessage(messages) {
 }
 
 module.exports = {
-  sendChatMessage
+  sendChatMessage,
+  BOT_NAME,
+  SYSTEM_PROMPT
 }

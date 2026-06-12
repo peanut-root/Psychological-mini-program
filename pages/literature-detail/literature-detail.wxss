@@ -40,6 +40,47 @@
   -webkit-user-select: text;
   user-select: text;
 }
+.target-tip {
+  display: inline-flex;
+  align-items: center;
+  padding: 10rpx 18rpx;
+  margin-bottom: 16rpx;
+  border-radius: 8rpx;
+  background-color: #FFF6D8;
+  color: #7A4B00;
+  font-size: 24rpx;
+  font-weight: bold;
+}
+.article-section {
+  padding: 24rpx 0 0;
+  margin-top: 8rpx;
+}
+.article-section:first-child {
+  padding-top: 0;
+  margin-top: 0;
+}
+.article-section-target {
+  padding: 24rpx;
+  margin-top: 16rpx;
+  border-left: 8rpx solid #F2B84B;
+  border-radius: 8rpx;
+  background-color: #FFF9E8;
+}
+.article-section-target:first-child {
+  padding-top: 24rpx;
+}
+.section-title {
+  display: block;
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #2F7DD8;
+  line-height: 1.4;
+  margin-bottom: 12rpx;
+}
+.article-section-target .section-title {
+  color: #7A4B00;
+  font-size: 32rpx;
+}
 .detail-content {
   font-size: 28rpx;
   color: #333333;
@@ -172,16 +213,69 @@
   display: flex;
   align-items: center;
   gap: 8rpx;
+  padding: 8rpx 12rpx;
+  border-radius: 8rpx;
+  background-color: #F7F8FA;
 }
 .comment-like-icon {
-  font-size: 28rpx;
+  font-size: 24rpx;
 }
 .comment-like-count {
   font-size: 24rpx;
   color: #999999;
 }
+.comment-liked,
+.comment-liked .comment-like-count {
+  color: #2F7DD8;
+}
 .comment-content {
   font-size: 26rpx;
+  color: #333333;
+  line-height: 1.6;
+  margin-top: 8rpx;
+}
+.comment-tools,
+.reply-tools {
+  display: flex;
+  gap: 24rpx;
+  margin-top: 12rpx;
+}
+.comment-tool {
+  font-size: 24rpx;
+  color: #2F7DD8;
+}
+.comment-tool.danger {
+  color: #E54D42;
+}
+.reply-list {
+  margin-top: 16rpx;
+  padding: 16rpx 20rpx;
+  border-radius: 12rpx;
+  background-color: #F7F8FA;
+}
+.reply-item {
+  padding: 12rpx 0;
+  border-bottom: 1rpx solid #EEEEEE;
+}
+.reply-item:last-child {
+  border-bottom: none;
+}
+.reply-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16rpx;
+}
+.reply-user {
+  font-size: 24rpx;
+  font-weight: bold;
+  color: #333333;
+}
+.reply-time {
+  font-size: 22rpx;
+  color: #999999;
+}
+.reply-content {
+  font-size: 24rpx;
   color: #333333;
   line-height: 1.6;
   margin-top: 8rpx;

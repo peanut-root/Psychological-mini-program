@@ -2,19 +2,22 @@
 <view class="user-info-wrapper">
   <!-- 未登录状态 -->
   <view class="not-logged-in" wx:if="{{!isLoggedIn}}">
-    <view class="avatar-placeholder">
-      <text class="avatar-icon">👤</text>
-    </view>
+    <button class="avatar-picker" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
+      <image class="avatar-preview" src="{{draftAvatarUrl}}" mode="aspectFill"></image>
+    </button>
     <text class="welcome-text">欢迎来到心屿</text>
-    <text class="login-hint">登录后查看完整信息</text>
-    <button class="login-btn" bindtap="onLogin">微信快捷登录</button>
+    <text class="login-hint">选择头像并填写昵称后查看完整信息</text>
+    <input class="nickname-input" type="nickname" value="{{draftNickName}}" bindinput="onNicknameInput" bindblur="onNicknameInput" placeholder="请输入昵称" />
+    <button class="login-btn" bindtap="onLogin">保存资料并登录</button>
   </view>
 
   <!-- 已登录状态 -->
   <view class="logged-in" wx:else>
     <!-- 用户信息头部 -->
     <view class="profile-header">
-      <image class="avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill" bindtap="changeAvatar"></image>
+      <button class="avatar-button" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
+        <image class="avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill"></image>
+      </button>
       <view class="user-detail">
         <text class="nickname">{{userInfo.nickName}}</text>
         <text class="user-id">ID: {{userInfo.userId}}</text>
@@ -31,10 +34,12 @@
           <text class="arrow">›</text>
         </view>
       </view>
-      <view class="setting-item" bindtap="changeAvatar">
+      <view class="setting-item">
         <text class="item-label">头像</text>
         <view class="item-right">
-          <image class="avatar-small" src="{{userInfo.avatarUrl}}" mode="aspectFill"></image>
+          <button class="avatar-small-button" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
+            <image class="avatar-small" src="{{userInfo.avatarUrl}}" mode="aspectFill"></image>
+          </button>
           <text class="arrow">›</text>
         </view>
       </view>

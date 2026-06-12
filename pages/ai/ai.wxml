@@ -5,7 +5,7 @@
   
   <view class="header">
     <view class="back-btn" bindtap="goBack">← 返回</view>
-    <text class="header-title">AI 心理助手</text>
+    <text class="header-title">心屿科普助手</text>
   </view>
   <view class="chat-container">
     <view class="debug-bar">{{debugText}}</view>
@@ -15,7 +15,7 @@
           <view class="message-content">{{item.content}}</view>
         </view>
         <view wx:if="{{isLoading}}" class="message assistant">
-          <view class="message-content">AI 正在思考...</view>
+          <view class="message-content">心屿科普助手正在整理...</view>
         </view>
       </view>
     </scroll-view>

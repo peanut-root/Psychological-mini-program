@@ -8,24 +8,11 @@ Page({
   },
 
   onShow() {
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
-      })
-    }
-  },
-
-  getUserProfile() {
-    wx.getUserProfile({
-      desc: '用于完善会员资料',
-      success: (res) => {
-        app.globalData.userInfo = res.userInfo
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
-      }
+    const userInfo = wx.getStorageSync('userInfo') || app.globalData.userInfo
+    app.globalData.userInfo = userInfo || null
+    this.setData({
+      userInfo: userInfo || null,
+      hasUserInfo: !!userInfo
     })
   },
 

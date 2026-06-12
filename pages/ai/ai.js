@@ -1,5 +1,7 @@
 // pages/ai/ai.js
-const { sendChatMessage } = require('../../utils/ai-api')
+const { sendChatMessage, BOT_NAME } = require('../../utils/ai-api')
+
+const WELCOME_MESSAGE = `你好，我是${BOT_NAME}，专门用于心理健康与精神疾病科普。我可以帮你了解症状表现、常见误解、治疗方式和就医准备，但不能替代医生诊断。`
 
 Page({
   data: {
@@ -14,11 +16,11 @@ Page({
     this.setData({
       messages: [{
         role: 'assistant',
-        content: '你好，我是一个AI心理科普助手。我可以为你介绍各种心理健康知识、心理疾病、症状表现等。无论你对哪方面的心理问题感兴趣，或者你正经历某些心理相关的症状，都可以随时问我，我会尽力给你准确的科普解答。'
+        content: WELCOME_MESSAGE
       }],
       inputValue: '',
       isLoading: false,
-      debugText: 'AI 页面已加载'
+      debugText: `${BOT_NAME}已准备好`
     })
   },
   onShow() {
@@ -29,7 +31,7 @@ Page({
     this.setData({
       messages: [{
         role: 'assistant',
-        content: '你好，我是一个AI心理科普助手。我可以为你介绍各种心理健康知识、心理疾病、症状表现等。无论你对哪方面的心理问题感兴趣，或者你正经历某些心理相关的症状，都可以随时问我，我会尽力给你准确的科普解答。'
+        content: WELCOME_MESSAGE
       }],
       inputValue: '',
       isLoading: false,
@@ -60,7 +62,7 @@ Page({
     })
 
     console.log('AI sendMessage', newMessages)
-    this.setData({ debugText: '正在发送消息...' })
+    this.setData({ debugText: '正在请求科普回复...' })
 
     // 发送到AI
     sendChatMessage(newMessages).then(reply => {
@@ -71,11 +73,11 @@ Page({
           content: reply
         }]),
         isLoading: false,
-        debugText: 'AI 已返回回复'
+        debugText: `${BOT_NAME}已回复`
       })
     }).catch(err => {
       console.error('AI error', err)
-      this.setData({ debugText: 'AI 调用失败: ' + err.message })
+      this.setData({ debugText: `${BOT_NAME}调用失败: ` + err.message })
       wx.showToast({
         title: err.message,
         icon: 'none'

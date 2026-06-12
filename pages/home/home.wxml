@@ -33,9 +33,9 @@
           <text class="science-disease">“{{item.disease}}”</text>
         </view>
         <view class="science-list">
-          <view class="science-row" bindtap="navigateToScience">综述科普</view>
-          <view class="science-row" bindtap="navigateToScience">误解科普</view>
-          <view class="science-row" bindtap="navigateToScience">治疗科普</view>
+          <view class="science-row" bindtap="navigateToScience" data-disease="{{item.disease}}" data-section="overview">综述科普</view>
+          <view class="science-row" bindtap="navigateToScience" data-disease="{{item.disease}}" data-section="misunderstanding">误解科普</view>
+          <view class="science-row" bindtap="navigateToScience" data-disease="{{item.disease}}" data-section="treatment">治疗科普</view>
         </view>
       </view>
     </view>

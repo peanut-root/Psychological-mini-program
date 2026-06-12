@@ -6,7 +6,16 @@
   <view class="main-content">
     <view class="detail-card">
       <text class="detail-title">{{article.title}}</text>
-      <text class="detail-content">{{article.content}}</text>
+      <view class="target-tip" wx:if="{{targetSectionLabel}}">
+        <text>已定位到：{{targetSectionLabel}}</text>
+      </view>
+      <view wx:if="{{article.sections && article.sections.length}}">
+        <view class="article-section {{item.isTarget ? 'article-section-target' : ''}}" wx:for="{{article.sections}}" wx:key="key" id="section-{{item.key}}">
+          <text class="section-title">{{item.title}}</text>
+          <text class="detail-content">{{item.body}}</text>
+        </view>
+      </view>
+      <text wx:else class="detail-content">{{article.content}}</text>
     </view>
     
     <!-- 点赞、评论、分享区域 -->
@@ -28,7 +37,7 @@
     <!-- 评论输入框 -->
     <view class="comment-input-container" wx:if="{{showCommentInput}}">
       <view class="comment-input-box">
-        <textarea class="comment-textarea" value="{{newComment}}" bindinput="onCommentInput" placeholder="写下你的评论..." maxlength="500"></textarea>
+        <textarea class="comment-textarea" value="{{newComment}}" bindinput="onCommentInput" placeholder="{{commentPlaceholder}}" maxlength="500"></textarea>
         <view class="comment-actions">
           <text class="cancel-btn" bindtap="hideCommentInput">取消</text>
           <text class="submit-btn" bindtap="submitComment">发送</text>
@@ -46,12 +55,29 @@
             <text class="comment-user-name">{{item.user}}</text>
             <text class="comment-time">{{item.time}}</text>
           </view>
-          <view class="comment-like" bindtap="onCommentLike" data-index="{{index}}">
-            <text class="comment-like-icon">👍</text>
+          <view class="comment-like {{item.liked ? 'comment-liked' : ''}}" bindtap="onCommentLike" data-id="{{item.id}}">
+            <text class="comment-like-icon">赞</text>
             <text class="comment-like-count">{{item.likes}}</text>
           </view>
         </view>
         <view class="comment-content">{{item.content}}</view>
+        <view class="comment-tools">
+          <text class="comment-tool" bindtap="showReplyInput" data-id="{{item.id}}" data-user="{{item.user}}">回复</text>
+          <text class="comment-tool danger" bindtap="onCommentDelete" data-id="{{item.id}}" wx:if="{{item.canDelete}}">删除</text>
+        </view>
+        <view class="reply-list" wx:if="{{item.replies && item.replies.length}}">
+          <view class="reply-item" wx:for="{{item.replies}}" wx:for-item="reply" wx:for-index="replyIndex" wx:key="id">
+            <view class="reply-header">
+              <text class="reply-user">{{reply.user}}</text>
+              <text class="reply-time">{{reply.time}}</text>
+            </view>
+            <view class="reply-content">{{reply.content}}</view>
+            <view class="reply-tools">
+              <text class="comment-tool {{reply.liked ? 'comment-liked' : ''}}" bindtap="onCommentLike" data-id="{{reply.id}}">赞 {{reply.likes}}</text>
+              <text class="comment-tool danger" bindtap="onCommentDelete" data-id="{{reply.id}}" wx:if="{{reply.canDelete}}">删除</text>
+            </view>
+          </view>
+        </view>
       </view>
     </view>
   </view>

@@ -1,17 +1,27 @@
 // pages/literature-detail/literature-detail.js
+const commentService = require('../../utils/comment-service')
+
 Page({
   data: {
     article: {},
     newComment: '',
-    showCommentInput: false
+    showCommentInput: false,
+    replyToCommentId: '',
+    replyToCommentUser: '',
+    commentPlaceholder: '写下你的评论...',
+    targetSection: '',
+    targetSectionLabel: '',
+    commentMode: 'local'
   },
 
   onLoad(options) {
     // 获取文章ID参数
-    const articleId = parseInt(options.id);
+    const articleId = parseInt(options.id, 10);
+    this.setData({
+      targetSection: options.section || ''
+    });
     // 加载对应的文章数据
     this.loadArticleData(articleId);
-    this.refreshLiveCounts();
   },
 
   onShow() {
@@ -1438,26 +1448,111 @@ DSM-5 诊断标准
       comments: []
     };
 
+    const article = articles[articleId] || articles[1]; // 默认显示第一个文章
+    const targetSection = this.data.targetSection;
+    article.sections = this.buildContentSections(article.content).map((section) => {
+      return Object.assign({}, section, {
+        isTarget: section.key === targetSection
+      });
+    });
+
     this.setData({
-      article: articles[articleId] || articles[1] // 默认显示第一个文章
+      article: article,
+      targetSectionLabel: this.getSectionLabel(targetSection)
+    }, () => {
+      this.refreshLiveCounts();
+      this.scrollToTargetSection();
     });
   },
 
+  buildContentSections(content) {
+    if (!content) return [];
+
+    const sectionKeyMap = {
+      '俗称': 'alias',
+      '症状': 'overview',
+      '具体诊断': 'diagnosis',
+      '一般治疗方式': 'treatment',
+      '常见误解/谣言/污名化澄清': 'misunderstanding',
+      '典型病例': 'case',
+      '高共病率': 'comorbidity',
+      '相关/易混淆障碍': 'related'
+    };
+
+    const sections = [];
+    const sectionReg = /\[([^\]]+)\]/g;
+    let match;
+    let lastTitle = '';
+    let lastIndex = 0;
+
+    while ((match = sectionReg.exec(content)) !== null) {
+      if (lastTitle) {
+        sections.push({
+          title: lastTitle,
+          key: sectionKeyMap[lastTitle] || ('section-' + sections.length),
+          body: content.slice(lastIndex, match.index).trim()
+        });
+      }
+      lastTitle = match[1];
+      lastIndex = sectionReg.lastIndex;
+    }
+
+    if (lastTitle) {
+      sections.push({
+        title: lastTitle,
+        key: sectionKeyMap[lastTitle] || ('section-' + sections.length),
+        body: content.slice(lastIndex).trim()
+      });
+    }
+
+    return sections;
+  },
+
+  getSectionLabel(section) {
+    const labelMap = {
+      overview: '综述科普',
+      misunderstanding: '误解科普',
+      treatment: '治疗科普'
+    };
+    return labelMap[section] || '';
+  },
+
+  scrollToTargetSection() {
+    const section = this.data.targetSection;
+    if (!section) return;
+
+    const selector = `#section-${section}`;
+    setTimeout(() => {
+      wx.pageScrollTo({
+        selector: selector,
+        duration: 300,
+        fail: () => {
+          wx.pageScrollTo({
+            scrollTop: 0,
+            duration: 0
+          });
+        }
+      });
+    }, 300);
+  },
+
   getStorageKeys() {
-    const id = this.data.article?.id;
+    const id = this.data.article && this.data.article.id;
     if (!id) {
       return {
         likes: '',
         liked: '',
         comments: '',
-        commentLikes: ''
+        commentLikes: '',
+        commentLiked: ''
       };
     }
     return {
       likes: `literature:article:${id}:likes`,
       liked: `literature:article:${id}:liked`,
       comments: `literature:article:${id}:comments`,
-      commentLikes: `literature:article:${id}:commentLikes`
+      commentLikes: `literature:article:${id}:commentLikes`,
+      commentLiked: `literature:article:${id}:commentLiked`
     };
   },
 
@@ -1469,24 +1564,66 @@ DSM-5 诊断标准
     const storedLiked = wx.getStorageSync(keys.liked);
     const storedComments = wx.getStorageSync(keys.comments);
     const storedCommentLikes = wx.getStorageSync(keys.commentLikes);
+    const storedCommentLiked = wx.getStorageSync(keys.commentLiked);
 
     const likes = typeof storedLikes === 'number' ? storedLikes : this.data.article.likes;
     const liked = typeof storedLiked === 'boolean' ? storedLiked : this.data.article.liked;
     let comments = Array.isArray(storedComments) ? storedComments : (this.data.article.comments || []);
-
-    if (storedCommentLikes && typeof storedCommentLikes === 'object') {
-      comments = comments.map((c) => {
-        const likeNum = storedCommentLikes[String(c.id)];
-        if (typeof likeNum === 'number') return Object.assign({}, c, { likes: likeNum });
-        return c;
-      });
-    }
+    comments = this.normalizeComments(comments, storedCommentLikes, storedCommentLiked);
 
     this.setData({
       'article.likes': likes,
       'article.liked': liked,
       'article.comments': comments
     });
+
+    this.refreshCloudComments();
+  },
+
+  refreshCloudComments() {
+    if (!commentService.isCloudAvailable()) return;
+
+    const articleId = this.data.article && this.data.article.id;
+    if (!articleId) return;
+
+    commentService.fetchComments(articleId).then((comments) => {
+      this.setData({
+        'article.comments': comments,
+        commentMode: 'cloud'
+      });
+    }).catch((err) => {
+      console.warn('云端评论加载失败，将继续显示本地评论', err);
+      this.setData({
+        commentMode: 'local'
+      });
+    });
+  },
+
+  normalizeComments(comments, likeMap, likedMap) {
+    const safeLikeMap = likeMap && typeof likeMap === 'object' ? likeMap : {};
+    const safeLikedMap = likedMap && typeof likedMap === 'object' ? likedMap : {};
+
+    return (comments || []).map((comment) => {
+      const id = String(comment.id);
+      const normalized = Object.assign({}, comment, {
+        likes: typeof safeLikeMap[id] === 'number' ? safeLikeMap[id] : (comment.likes || 0),
+        liked: !!safeLikedMap[id],
+        canDelete: comment.canDelete !== false,
+        replies: this.normalizeComments(comment.replies || [], safeLikeMap, safeLikedMap)
+      });
+      return normalized;
+    });
+  },
+
+  saveComments(comments) {
+    const keys = this.getStorageKeys();
+    if (keys.comments) {
+      wx.setStorageSync(keys.comments, comments);
+    }
+  },
+
+  createCommentId() {
+    return `comment_${Date.now()}_${Math.random().toString(16).slice(2)}`;
   },
 
   onLike() {
@@ -1532,14 +1669,31 @@ DSM-5 诊断标准
 
   showCommentInput() {
     this.setData({
-      showCommentInput: true
+      showCommentInput: true,
+      replyToCommentId: '',
+      replyToCommentUser: '',
+      commentPlaceholder: '写下你的评论...'
+    });
+  },
+
+  showReplyInput(e) {
+    const id = e.currentTarget.dataset.id;
+    const user = e.currentTarget.dataset.user || '用户';
+    this.setData({
+      showCommentInput: true,
+      replyToCommentId: String(id),
+      replyToCommentUser: user,
+      commentPlaceholder: `回复 ${user}...`
     });
   },
 
   hideCommentInput() {
     this.setData({
       showCommentInput: false,
-      newComment: ''
+      newComment: '',
+      replyToCommentId: '',
+      replyToCommentUser: '',
+      commentPlaceholder: '写下你的评论...'
     });
   },
 
@@ -1550,7 +1704,8 @@ DSM-5 诊断标准
   },
 
   submitComment() {
-    if (!this.data.newComment.trim()) {
+    const content = this.data.newComment.trim();
+    if (!content) {
       wx.showToast({
         title: '请输入评论内容',
         icon: 'none'
@@ -1558,54 +1713,201 @@ DSM-5 诊断标准
       return;
     }
 
+    const parentId = this.data.replyToCommentId || '';
+    const isReply = !!parentId;
+
+    if (commentService.isCloudAvailable()) {
+      this.setData({
+        newComment: '',
+        showCommentInput: false,
+        replyToCommentId: '',
+        replyToCommentUser: '',
+        commentPlaceholder: '写下你的评论...'
+      });
+
+      commentService.addComment(this.data.article.id, content, parentId).then(() => {
+        this.refreshCloudComments();
+        wx.showToast({
+          title: isReply ? '回复成功' : '评论成功',
+          icon: 'success'
+        });
+      }).catch((err) => {
+        console.warn('云端评论提交失败，改用本地保存', err);
+        this.addLocalComment(content, parentId, isReply);
+      });
+      return;
+    }
+
+    this.addLocalComment(content, parentId, isReply);
+  },
+
+  addLocalComment(content, parentId, isReply) {
     const newComment = {
-      id: Date.now(),
+      id: this.createCommentId(),
       user: '当前用户',
-      avatar: 'https://via.placeholder.com/40',
-      content: this.data.newComment,
+      content: content,
       time: '刚刚',
-      likes: 0
+      likes: 0,
+      liked: false,
+      canDelete: true,
+      replies: []
     };
 
     const article = Object.assign({}, this.data.article);
-    const comments = [newComment].concat(article.comments || []);
+    let comments = (article.comments || []).slice();
+
+    if (isReply) {
+      comments = comments.map((comment) => {
+        if (String(comment.id) !== String(parentId)) return comment;
+        const replies = (comment.replies || []).concat([newComment]);
+        return Object.assign({}, comment, { replies: replies });
+      });
+    } else {
+      comments = [newComment].concat(comments);
+    }
+
     article.comments = comments;
     
     this.setData({
       article: article,
       newComment: '',
-      showCommentInput: false
+      showCommentInput: false,
+      replyToCommentId: '',
+      replyToCommentUser: '',
+      commentPlaceholder: '写下你的评论...'
     });
 
-    const keys = this.getStorageKeys();
-    if (keys.comments) {
-      wx.setStorageSync(keys.comments, comments);
-    }
+    this.saveComments(comments);
 
     wx.showToast({
-      title: '评论成功',
+      title: isReply ? '回复成功' : '评论成功',
       icon: 'success'
     });
   },
 
   onCommentLike(e) {
-    const index = e.currentTarget.dataset.index;
+    const id = e.currentTarget.dataset.id;
+
+    if (this.data.commentMode === 'cloud') {
+      commentService.toggleLike(this.data.article.id, id).then(() => {
+        this.refreshCloudComments();
+      }).catch((err) => {
+        console.warn('云端点赞失败，改用本地点赞', err);
+        this.toggleLocalCommentLike(id);
+      });
+      return;
+    }
+
+    this.toggleLocalCommentLike(id);
+  },
+
+  toggleLocalCommentLike(id) {
     const article = Object.assign({}, this.data.article);
-    const comments = (article.comments || []).slice();
-    const target = comments[index];
-    target.likes = (target.likes || 0) + 1;
+    const comments = this.toggleCommentLike(article.comments || [], id);
     article.comments = comments;
 
     this.setData({
       article: article
     });
+    this.saveComments(comments);
 
     const keys = this.getStorageKeys();
     if (keys.commentLikes) {
-      const likeMap = wx.getStorageSync(keys.commentLikes) || {};
-      likeMap[String(target.id)] = target.likes;
+      const likeMap = {};
+      const likedMap = {};
+      this.collectCommentLikeState(comments, likeMap, likedMap);
       wx.setStorageSync(keys.commentLikes, likeMap);
+      wx.setStorageSync(keys.commentLiked, likedMap);
     }
+  },
+
+  toggleCommentLike(comments, targetId) {
+    return (comments || []).map((comment) => {
+      const next = Object.assign({}, comment);
+      if (String(next.id) === String(targetId)) {
+        const liked = !next.liked;
+        next.liked = liked;
+        next.likes = Math.max(0, (next.likes || 0) + (liked ? 1 : -1));
+      }
+      next.replies = this.toggleCommentLike(next.replies || [], targetId);
+      return next;
+    });
+  },
+
+  collectCommentLikeState(comments, likeMap, likedMap) {
+    (comments || []).forEach((comment) => {
+      likeMap[String(comment.id)] = comment.likes || 0;
+      if (comment.liked) {
+        likedMap[String(comment.id)] = true;
+      }
+      this.collectCommentLikeState(comment.replies || [], likeMap, likedMap);
+    });
+  },
+
+  onCommentDelete(e) {
+    const id = e.currentTarget.dataset.id;
+
+    wx.showModal({
+      title: '删除评论',
+      content: '确定删除这条评论吗？',
+      confirmText: '删除',
+      confirmColor: '#E54D42',
+      success: (res) => {
+        if (!res.confirm) return;
+
+        if (this.data.commentMode === 'cloud') {
+          commentService.deleteComment(id).then(() => {
+            this.refreshCloudComments();
+            wx.showToast({
+              title: '已删除',
+              icon: 'none'
+            });
+          }).catch((err) => {
+            console.warn('云端删除失败', err);
+            wx.showToast({
+              title: '只能删除自己的评论',
+              icon: 'none'
+            });
+          });
+          return;
+        }
+
+        const article = Object.assign({}, this.data.article);
+        const nextComments = this.deleteCommentById(article.comments || [], id);
+        article.comments = nextComments;
+        this.setData({
+          article: article
+        });
+        this.saveComments(nextComments);
+        this.persistCommentLikeState(nextComments);
+
+        wx.showToast({
+          title: '已删除',
+          icon: 'none'
+        });
+      }
+    });
+  },
+
+  deleteCommentById(comments, targetId) {
+    return (comments || [])
+      .filter((comment) => String(comment.id) !== String(targetId))
+      .map((comment) => {
+        const next = Object.assign({}, comment);
+        next.replies = this.deleteCommentById(next.replies || [], targetId);
+        return next;
+      });
+  },
+
+  persistCommentLikeState(comments) {
+    const keys = this.getStorageKeys();
+    if (!keys.commentLikes) return;
+
+    const likeMap = {};
+    const likedMap = {};
+    this.collectCommentLikeState(comments, likeMap, likedMap);
+    wx.setStorageSync(keys.commentLikes, likeMap);
+    wx.setStorageSync(keys.commentLiked, likedMap);
   },
 
   goBack() {
